@@ -29,17 +29,9 @@ def save_data(t: float, h: int, m: int):
     with sqlite3.connect('db.sqlite') as connection:
         cursor = connection.cursor()
         cursor.execute(
-            "CREATE TABLE IF NOT EXISTS data ("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            "temp DECIMAL(5,2),"
-            "humidity TINYINT,"
-            "moisture TINYINT,"
-            "datetime DATETIME"
-            ");"
+            "INSERT INTO data (temp, humidity, moisture) VALUES (?, ?, ?)",
+            (t, h, m)
         )
-        cursor.execute("INSERT INTO data VALUES (?, ?, ?, ?)", (
-            t, h, m, datetime.datetime.now()
-        ))
         connection.commit()
         connection.close()
 
