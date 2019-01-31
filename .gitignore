@@ -1,4 +1,6 @@
 #.gitignore
 
+db.sqlite
+
 *.pyc
 *~

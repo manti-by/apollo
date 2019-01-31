@@ -26,7 +26,7 @@ def get_temp_humidity()->tuple:
 
 
 def save_data(t: float, h: int, m: int):
-    with sqlite3.connect('data.db') as connection:
+    with sqlite3.connect('db.sqlite') as connection:
         cursor = connection.cursor()
         cursor.execute(
             "CREATE TABLE IF NOT EXISTS data ("

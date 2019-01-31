@@ -1,2 +1,39 @@
+define MIGRATION_SCRIPT
+CREATE TABLE IF NOT EXISTS data (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    temp DECIMAL(5,2),
+    humidity TINYINT,
+    moisture TINYINT,
+    datetime DATETIME
+);
+endef
+
+export MIGRATION_SCRIPT
+migrate:
+	sqlite3 db.sqlite "$$MIGRATION_SCRIPT"
+
+define SEED_SCRIPT
+INSERT INTO data VALUES (1, 22, 50, 75, '2018-01-01 02:00:00');
+INSERT INTO data VALUES (2, 25, 45, 72, '2018-01-01 02:15:00');
+INSERT INTO data VALUES (3, 23, 55, 68, '2018-01-01 02:30:00');
+INSERT INTO data VALUES (4, 20, 60, 64, '2018-01-01 02:45:00');
+INSERT INTO data VALUES (5, 18, 72, 60, '2018-01-01 03:00:00');
+INSERT INTO data VALUES (6, 17, 50, 60, '2018-01-01 03:15:00');
+INSERT INTO data VALUES (7, 22, 45, 58, '2018-01-01 03:30:00');
+INSERT INTO data VALUES (8, 25, 45, 59, '2018-01-01 03:45:00');
+INSERT INTO data VALUES (9, 26, 40, 59, '2018-01-01 04:00:00');
+INSERT INTO data VALUES (10, 25, 42, 58, '2018-01-01 04:15:00');
+endef
+
+export SEED_SCRIPT
+seed:
+	sqlite3 db.sqlite "$$SEED_SCRIPT"
+
+export FLASK_APP=app.server
+export FLASK_DEBUG=1
+export TEMPLATES_AUTO_RELOAD=1
+server:
+	flask run
+
 flake:
 	flake8
