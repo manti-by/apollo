@@ -1,22 +1,19 @@
 import Adafruit_DHT
-import datetime
+import Adafruit_MCP3008
+import Adafruit_GPIO.SPI as SPI
 import sqlite3
-import spidev
 
-
-DHT22_PIN = 3
-SPI_CHANNEL = 1
+SPI_PORT = 0
+SPI_DEVICE = 0
+DHT22_PIN = 4
 
 
 def get_moisture_level()->int:
-    spi = spidev.SpiDev()
-    spi.open(0, 0)
-
-    self.r = spi.xfer([1, (8 + self.channel) << 4, 0])
-    adc_out = ((self.r[1] & 3) << 8) + self.r[2]
-    percent = 100 - int(round((adc_out - 300) / 7.24))
-
-    return percent
+    mcp = Adafruit_MCP3008.MCP3008(
+        spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE)
+    )
+    adc = mcp.read_adc(0)
+    return adc / 10.24
 
 
 def get_temp_humidity()->tuple:
@@ -33,14 +30,13 @@ def save_data(t: float, h: int, m: int):
             (t, h, m)
         )
         connection.commit()
-        connection.close()
 
 
 if __name__ == '__main__':
     moisture = get_moisture_level()
-    temp, humidity = get_temp_humidity()
+    humidity, temp = get_temp_humidity()
     save_data(temp, humidity, moisture)
 
-    print('Temp: {} *C, humidity: {}%, moisture: {}%'.format(
-        temp, humidity, moisture
+    print('Temp: {:0.2f} *C, humidity: {:d}%, moisture: {:d}%'.format(
+        temp, int(humidity), int(moisture)
     ))

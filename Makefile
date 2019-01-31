@@ -38,7 +38,7 @@ export FLASK_APP=app.server
 export FLASK_DEBUG=1
 export TEMPLATES_AUTO_RELOAD=1
 server:
-	flask run
+	flask run --host=0.0.0.0
 
 flake:
 	flake8
