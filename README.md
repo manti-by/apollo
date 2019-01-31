@@ -1,9 +1,9 @@
 Benjamin
-========
+====
 
 
 About
------
+----
 
 Raspberry Pi app for monitoring Ficus benjamina health
 
@@ -13,4 +13,40 @@ Source link: https://bitbucket.org/manti_by/benjamin/
 
 Requirements:
 
-    Rspberry Pi, Moisture and DHT22 sensors
+    Raspberry Pi, Soil Moisture + MCP3008 and DHT22 sensors
+
+
+Setup
+----
+
+1. Install python pip
+    
+    $ sudo apt install python-pip sqlite3 supervisor
+    
+2. Install, create and activate virtualenv
+
+    $ sudo pip install virtualenv
+    
+    $ virtualenv -p python3 --no-site-packages --prompt=ben- venv
+    
+    $ source venv/bin/activate
+    
+3. Clone sources and install pip packages
+    
+    $ mkdir benjamin && cd benjamin/
+
+    $ git clone https://bitbucket.org/manti_by/benjamin.git src
+    
+    $ pip install -r src/app/requirements.txt
+    
+4. Run flask server under supervisor
+
+    $ sudo ln -s /home/pi/benjamin/src/svctl.conf /etc/supervisorctl/conf.d/benjamin.conf
+    
+    $ sudo supervisorctl update
+    
+5. Install crontab for worker
+
+    */5 * * * *    /home/pi/benjamin/venv/bin/python /home/pi/benjamin/src/app/worker.py
+
+    

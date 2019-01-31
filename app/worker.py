@@ -1,11 +1,15 @@
+import os
+import sqlite3
+
 import Adafruit_DHT
 import Adafruit_MCP3008
 import Adafruit_GPIO.SPI as SPI
-import sqlite3
 
 SPI_PORT = 0
 SPI_DEVICE = 0
 DHT22_PIN = 4
+
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db.sqlite')
 
 
 def get_moisture_level()->int:
@@ -13,7 +17,7 @@ def get_moisture_level()->int:
         spi=SPI.SpiDev(SPI_PORT, SPI_DEVICE)
     )
     adc = mcp.read_adc(0)
-    return adc / 10.24
+    return 100 - adc / 10.24
 
 
 def get_temp_humidity()->tuple:
@@ -23,7 +27,7 @@ def get_temp_humidity()->tuple:
 
 
 def save_data(t: float, h: int, m: int):
-    with sqlite3.connect('db.sqlite') as connection:
+    with sqlite3.connect(DB_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute(
             "INSERT INTO data (temp, humidity, moisture) VALUES (?, ?, ?)",

@@ -1,3 +1,4 @@
+import os
 import json
 import sqlite3
 
@@ -9,9 +10,11 @@ from flask import (
 
 app = Flask(__name__)
 
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db.sqlite')
+
 
 def get_data()->dict:
-    with sqlite3.connect('db.sqlite') as session:
+    with sqlite3.connect(DB_PATH) as session:
         cursor = session.cursor()
         cursor.execute("SELECT * FROM data ORDER BY datetime DESC LIMIT 10")
         session.commit()
