@@ -77,7 +77,10 @@
                     </div>
                 </div>
             </form>
-            <canvas id="chart"></canvas>
+            <canvas id="line-chart"></canvas>
+            <div id="weather">
+
+            </div>
         </main>
     </div>
 
@@ -93,7 +96,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
     <script>const DATA_SET = JSON.parse('{{ data|safe }}');</script>
-    <script src="{{ url_for('static', filename='chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='line-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='weather.js') }}"></script>
     <script src="{{ url_for('static', filename='controls.js') }}"></script>
 </body>
 </html>

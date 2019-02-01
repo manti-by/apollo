@@ -2,7 +2,7 @@
 
     'use strict';
 
-    let $chart = $("#chart"),
+    let $chart = $("#line-chart"),
         $msg = $("#message");
 
     let chart = new Chart($chart, {
@@ -79,6 +79,6 @@
             $msg.removeClass('d-none')
                 .text('Failed to fetch data from server');
         });
-    }, 10000);
+    }, 5 * 10 * 1000);
 
 })(jQuery);

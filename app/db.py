@@ -12,7 +12,7 @@ PERIODS = {
 }
 
 
-def get_data()->tuple:
+def get_line_chart_data()->tuple:
     _type = request.args.get('type', 'absolute')
     limit = request.args.get('limit', 10)
     group = request.args.get('group', 'hourly')
@@ -20,7 +20,6 @@ def get_data()->tuple:
     with sqlite3.connect(DB_PATH) as session:
         cursor = session.cursor()
         query_limit = PERIODS.get(group) * int(limit)
-        print(query_limit)
         cursor.execute(
             "SELECT * FROM data ORDER BY datetime DESC LIMIT ?", (query_limit, )
         )
@@ -62,3 +61,13 @@ def get_data()->tuple:
             'limit': limit,
             'group': group
         }
+
+
+def get_bar_chart_data():
+    with sqlite3.connect(DB_PATH) as session:
+        cursor = session.cursor()
+        cursor.execute(
+            "SELECT * FROM data ORDER BY datetime DESC LIMIT 1"
+        )
+        session.commit()
+        return cursor.fetchone()
