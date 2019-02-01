@@ -65,7 +65,7 @@
     });
 
     setInterval(() => {
-        $.getJSON('/api', (data) => {
+        $.getJSON('/api' + window.location.search, (data) => {
             $msg.addClass('d-none');
 
             chart.data.labels = data['label'];
