@@ -15,76 +15,88 @@
 <body>
     <div class="container">
         <nav class="navbar navbar-light bg-light">
-            <span class="navbar-brand">Sensors data</span>
-            <span class="my-2 text-secondary">Benjamin</span>
+            <span class="navbar-brand">Apollo</span>
+            <span id="status" class="my-2 text-secondary">
+                Last update: {{ time }}
+            </span>
         </nav>
         <main>
-            <div id="message" class="alert alert-danger d-none" role="alert"></div>
-            <form id="controls" action="/" method="get" class="row">
-                <div class="form-group col-2">
-                    <label for="limit">Limit:</label>
-                    <select id="limit" name="limit" class="form-control limit">
-                        <option value="5"{% if options.limit == '5' %} selected{% endif %}">5</option>
-                        <option value="10"{% if options.limit == '10' %} selected{% endif %}>10</option>
-                        <option value="25"{% if options.limit == '25' %} selected{% endif %}>25</option>
-                    </select>
+            <div class="card">
+                <div class="card-header">
+                    Ficus Benjamin
                 </div>
-                <div class="form-group col-2">
-                    <label for="group">Group:</label>
-                    <select id="group" name="group" class="form-control group">
-                        <option value="hourly"{% if options.group == 'hourly' %} selected{% endif %}>Hourly</option>
-                        <option value="daily"{% if options.group == 'daily' %} selected{% endif %}>Daily</option>
-                        <option value="monthly"{% if options.group == 'monthly' %} selected{% endif %}>Monthly</option>
-                    </select>
-                </div>
-                <div class="form-group col-4">
-                    <div>
-                        <label>Graph Type:</label>
-                    </div>
-                    <div class="row">
-                        <div class="input-group col-6">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input id="type-absolute" type="radio" name="type"
-                                           class="type" value="absolute"
-                                           {% if options.type == 'absolute' %}checked{% endif %}>
+                <div class="card-body">
+                    <form id="controls" action="/" method="get" class="row">
+                        <div class="form-group col-2">
+                            <label for="limit">Limit:</label>
+                            <select id="limit" name="limit" class="form-control limit">
+                                <option value="5"{% if options.limit == '5' %} selected{% endif %}">5</option>
+                                <option value="10"{% if options.limit == '10' %} selected{% endif %}>10</option>
+                                <option value="25"{% if options.limit == '25' %} selected{% endif %}>25</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-2">
+                            <label for="group">Group:</label>
+                            <select id="group" name="group" class="form-control group">
+                                <option value="hourly"{% if options.group == 'hourly' %} selected{% endif %}>Hourly</option>
+                                <option value="daily"{% if options.group == 'daily' %} selected{% endif %}>Daily</option>
+                                <option value="monthly"{% if options.group == 'monthly' %} selected{% endif %}>Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-4">
+                            <div>
+                                <label>Graph Type:</label>
+                            </div>
+                            <div class="row">
+                                <div class="input-group col-6">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input id="type-absolute" type="radio" name="type"
+                                                   class="type" value="absolute"
+                                                   {% if options.type == 'absolute' %}checked{% endif %}>
+                                        </div>
+                                    </div>
+                                    <label class="form-control" for="type-absolute">
+                                        Absolute
+                                    </label>
+                                </div>
+                                <div class="input-group col-6">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">
+                                            <input id="type-stacked" type="radio" name="type"
+                                                   class="type" value="stacked"
+                                                   {% if options.type == 'stacked' %}checked{% endif %}>
+                                        </div>
+                                    </div>
+                                    <label class="form-control" for="type-stacked">
+                                        Stacked
+                                    </label>
                                 </div>
                             </div>
-                            <label class="form-control" for="type-absolute">
-                                Absolute
-                            </label>
                         </div>
-                        <div class="input-group col-6">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input id="type-stacked" type="radio" name="type"
-                                           class="type" value="stacked"
-                                           {% if options.type == 'stacked' %}checked{% endif %}>
-                                </div>
-                            </div>
-                            <label class="form-control" for="type-stacked">
-                                Stacked
-                            </label>
-                        </div>
-                    </div>
+                    </form>
+                    <canvas id="line-chart"></canvas>
                 </div>
-            </form>
-            <canvas id="line-chart"></canvas>
+            </div>
             <div id="weather"></div>
         </main>
     </div>
 
     {% raw %}
     <script id="t-weather" type="text/x-handlebars-template">
-        <div class="widget">
-            <div class="row">
-                <h2>Weather</h2>
+        <div class="card">
+            <div class="card-header">
+                Weather
             </div>
-            <div class="row">
-                <div class="col">Temp: {{ temp }} &deg;C</div>
-                <div class="col">Wind: {{ wind }} m/s {{ wind_dir }}</div>
-                <div class="col">Pressure: {{ pressure }} mm Hg</div>
-                <div class="col"><img src="{{ icon }}" alt="weather"></div>
+            <div class="card-body">
+                <div class="card-text">
+                    <div class="row">
+                        <div class="col">Temp: {{ temp }} &deg;C</div>
+                        <div class="col">Wind: {{ wind }} m/s {{ wind_dir }}</div>
+                        <div class="col">Pressure: {{ pressure }} mmHg</div>
+                        <div class="col"><img src="{{ icon }}" alt="weather"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </script>

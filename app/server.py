@@ -1,5 +1,6 @@
 import json
 
+from time import localtime, strftime
 from flask import (
     Flask,
     jsonify,
@@ -14,7 +15,8 @@ app = Flask(__name__)
 def index():
     data, options = get_line_chart_data()
     return render_template('index.html',
-                           data=data, options=options)
+                           data=data, options=options,
+                           time=strftime('%H:%M', localtime()))
 
 
 @app.route('/api')

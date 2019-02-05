@@ -2,8 +2,8 @@
 
     'use strict';
 
-    let $chart = $("#line-chart"),
-        $msg = $("#message"),
+    let $status = $('#status'),
+        $chart = $('#line-chart'),
         options = {
             responsive: true,
             legend: {
@@ -112,8 +112,6 @@
     // Periodically update chart from server
     let update_chart = () => {
         $.getJSON('/api' + window.location.search, (data) => {
-            $msg.addClass('d-none');
-
             chart.data.labels = data['label'];
 
             chart.data.datasets.forEach((dataset) => {
@@ -121,13 +119,23 @@
             });
 
             chart.update();
+        }).done(() => {
+            let now = new Date();
+            $status
+                .removeClass('text-danger')
+                .addClass('text-secondary')
+                .text(
+                    'Last update: ' + now.getHours() + ':' + now.getMinutes()
+                );
         }).fail(() => {
-            $msg.removeClass('d-none')
-                .text('Failed to fetch data from server');
+            $status
+                .removeClass('text-secondary')
+                .addClass('text-danger')
+                .text('Connection error');
         });
     };
 
-    setInterval(update_chart, 5 * 10 * 1000);
+    setInterval(update_chart, 5 * 60 * 1000);
 
     // Listen controls
     $('select.limit, select.group').on('change', update_chart);
