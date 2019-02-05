@@ -6,19 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
-    <style>
-        nav,
-        #controls {
-            margin-bottom: 20px;
-        }
-        #controls {
-            padding: 0 1em;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
     <div class="container">
@@ -31,7 +23,7 @@
             <form id="controls" action="/" method="get" class="row">
                 <div class="form-group col-2">
                     <label for="limit">Limit:</label>
-                    <select id="limit" name="limit" class="form-control">
+                    <select id="limit" name="limit" class="form-control limit">
                         <option value="5"{% if options.limit == '5' %} selected{% endif %}">5</option>
                         <option value="10"{% if options.limit == '10' %} selected{% endif %}>10</option>
                         <option value="25"{% if options.limit == '25' %} selected{% endif %}>25</option>
@@ -39,7 +31,7 @@
                 </div>
                 <div class="form-group col-2">
                     <label for="group">Group:</label>
-                    <select id="group" name="group" class="form-control">
+                    <select id="group" name="group" class="form-control group">
                         <option value="hourly"{% if options.group == 'hourly' %} selected{% endif %}>Hourly</option>
                         <option value="daily"{% if options.group == 'daily' %} selected{% endif %}>Daily</option>
                         <option value="monthly"{% if options.group == 'monthly' %} selected{% endif %}>Monthly</option>
@@ -78,11 +70,25 @@
                 </div>
             </form>
             <canvas id="line-chart"></canvas>
-            <div id="weather">
-
-            </div>
+            <div id="weather"></div>
         </main>
     </div>
+
+    {% raw %}
+    <script id="t-weather" type="text/x-handlebars-template">
+        <div class="widget">
+            <div class="row">
+                <h2>Weather</h2>
+            </div>
+            <div class="row">
+                <div class="col">Temp: {{ temp }} &deg;C</div>
+                <div class="col">Wind: {{ wind }} m/s {{ wind_dir }}</div>
+                <div class="col">Pressure: {{ pressure }} mm Hg</div>
+                <div class="col"><img src="{{ icon }}" alt="weather"></div>
+            </div>
+        </div>
+    </script>
+    {% endraw %}
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -93,11 +99,19 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
             integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
             crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"
+            integrity="sha256-oSgtFCCmHWRPQ/JmR4OoZ3Xke1Pw4v50uh6pLcu+fIc="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.12/handlebars.min.js"
+            integrity="sha256-qlku5J3WO/ehJpgXYoJWC2px3+bZquKChi4oIWrAKoI="
+            crossorigin="anonymous"></script>
 
-    <script>const DATA_SET = JSON.parse('{{ data|safe }}');</script>
-    <script src="{{ url_for('static', filename='line-chart.js') }}"></script>
-    <script src="{{ url_for('static', filename='weather.js') }}"></script>
-    <script src="{{ url_for('static', filename='controls.js') }}"></script>
+    <script>
+        const DATA = JSON.parse('{{ data|tojson|safe }}'),
+              OPTIONS = JSON.parse('{{ options|tojson|safe }}');
+    </script>
+    <script src="{{ url_for('static', filename='js/line-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>

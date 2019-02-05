@@ -14,7 +14,7 @@ app = Flask(__name__)
 def index():
     data, options = get_line_chart_data()
     return render_template('index.html',
-                           data=json.dumps(data), options=options)
+                           data=data, options=options)
 
 
 @app.route('/api')
