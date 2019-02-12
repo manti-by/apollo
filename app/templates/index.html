@@ -33,11 +33,13 @@
                                 <option value="5"{% if options.limit == '5' %} selected{% endif %}">5</option>
                                 <option value="10"{% if options.limit == '10' %} selected{% endif %}>10</option>
                                 <option value="25"{% if options.limit == '25' %} selected{% endif %}>25</option>
+                                <option value="100"{% if options.limit == '100' %} selected{% endif %}>100</option>
                             </select>
                         </div>
                         <div class="form-group col-2">
                             <label for="group">Group:</label>
                             <select id="group" name="group" class="form-control group">
+                                <option value="live"{% if options.group == 'live' %} selected{% endif %}>Live</option>
                                 <option value="hourly"{% if options.group == 'hourly' %} selected{% endif %}>Hourly</option>
                                 <option value="daily"{% if options.group == 'daily' %} selected{% endif %}>Daily</option>
                                 <option value="monthly"{% if options.group == 'monthly' %} selected{% endif %}>Monthly</option>

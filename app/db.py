@@ -6,8 +6,9 @@ from flask import request
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db.sqlite')
 
 PERIODS = {
+    'live': 1,
     'hourly': 12,
-    'daily' : 12 * 24,
+    'daily': 12 * 24,
     'weekly': 12 * 24 * 7,
 }
 
@@ -19,7 +20,7 @@ def get_line_chart_data()->tuple:
 
     with sqlite3.connect(DB_PATH) as session:
         cursor = session.cursor()
-        query_limit = PERIODS.get(group) * int(limit)
+        query_limit = PERIODS.get(group, 1) * int(limit)
         cursor.execute(
             "SELECT * FROM data ORDER BY datetime DESC LIMIT ?", (query_limit, )
         )
@@ -41,10 +42,14 @@ def get_line_chart_data()->tuple:
         period = PERIODS.get(group)
         for item in data:
             counter += 1
-            sum_temp += item[1]
-            sum_humidity += item[2]
-            sum_moisture += item[3]
-            label = item[4][11:16]
+            sum_temp += item[1] or 0
+            sum_humidity += item[2] or 0
+            sum_moisture += item[3] or 0
+
+            if group in ('live', 'hourly'):
+                label = item[4][11:16]
+            else:
+                label = item[4][:10]
 
             if counter % period == 0:
                 result['temp'].append(round(sum_temp / period, 1))

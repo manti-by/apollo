@@ -111,7 +111,10 @@
 
     // Periodically update chart from server
     let update_chart = () => {
-        $.getJSON('/api' + window.location.search, (data) => {
+        let limit = $('#limit').val(),
+            group = $('#group').val();
+
+        $.getJSON('/api?limit=' + limit + '&group=' + group, (data) => {
             chart.data.labels = data['label'];
 
             chart.data.datasets.forEach((dataset) => {
