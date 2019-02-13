@@ -22,8 +22,26 @@
         </nav>
         <main>
             <div class="card">
+                    <div class="card-header">
+                        Ficus Benjamin Status
+                    </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <canvas id="plants-latest-temp"></canvas>
+                        </div>
+                        <div class="col">
+                            <canvas id="plants-latest-humidity"></canvas>
+                        </div>
+                        <div class="col">
+                            <canvas id="plants-latest-moisture"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
                 <div class="card-header">
-                    Ficus Benjamin
+                    Ficus Benjamin Report
                 </div>
                 <div class="card-body">
                     <form id="controls" action="/" method="get" class="row">
@@ -77,7 +95,7 @@
                             </div>
                         </div>
                     </form>
-                    <canvas id="line-chart"></canvas>
+                    <canvas id="plants-report"></canvas>
                 </div>
             </div>
             <div id="weather"></div>
@@ -120,12 +138,9 @@
             integrity="sha256-qlku5J3WO/ehJpgXYoJWC2px3+bZquKChi4oIWrAKoI="
             crossorigin="anonymous"></script>
 
-    <script>
-        const DATA = JSON.parse('{{ data|tojson|safe }}'),
-              OPTIONS = JSON.parse('{{ options|tojson|safe }}');
-    </script>
-    <script src="{{ url_for('static', filename='js/line-chart.js') }}"></script>
     <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plants-latest.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/plants-report.js') }}"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
 </body>
 </html>

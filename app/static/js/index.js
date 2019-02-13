@@ -3,6 +3,7 @@
     'use strict';
 
     $.weather.init();
-    $.plant.init();
+    $.plants_report.init();
+    $.plants_latest.init();
 
 })(jQuery);

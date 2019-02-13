@@ -2,10 +2,10 @@
 
     'use strict';
 
-    class PlantWidget {
+    class PlantsReportWidget {
         constructor() {
             this.status = $('#status');
-            this.chart = $('#line-chart');
+            this.chart = $('#plants-report');
 
             this.options = {
                 responsive: true,
@@ -79,7 +79,7 @@
                     labels: [],
                     datasets: [{
                         index: 'temp',
-                        label: "Temperature, C",
+                        label: 'Temperature, C',
                         fill: false,
                         borderColor: 'rgb(255, 99, 132)',
                         backgroundColor: 'rgb(255, 99, 132)',
@@ -87,7 +87,7 @@
                         yAxesGroup: 'A'
                     }, {
                         index: 'humidity',
-                        label: "Humidity, %",
+                        label: 'Humidity, %',
                         fill: false,
                         borderColor: 'rgba(54, 162, 235)',
                         backgroundColor: 'rgba(54, 162, 235)',
@@ -95,7 +95,7 @@
                         yAxesGroup: 'B'
                     }, {
                         index: 'moisture',
-                        label: "Moisture, %",
+                        label: 'Moisture, %',
                         fill: false,
                         borderColor: 'rgb(153, 102, 255)',
                         backgroundColor: 'rgb(153, 102, 255)',
@@ -159,6 +159,6 @@
 
     }
 
-    $.plant = new PlantWidget();
+    $.plants_report = new PlantsReportWidget();
 
 })(jQuery);

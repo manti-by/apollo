@@ -16,7 +16,7 @@ PERIODS = {
 def get_line_chart_data()->tuple:
     _type = request.args.get('type', 'absolute')
     limit = request.args.get('limit', 10)
-    group = request.args.get('group', 'hourly')
+    group = request.args.get('group', 'live')
 
     with sqlite3.connect(DB_PATH) as session:
         cursor = session.cursor()
