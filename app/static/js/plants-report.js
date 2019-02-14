@@ -54,9 +54,9 @@
                         min: 0,
                         max: 100
                     },
-                    stacked: {
-                        min: 15,
-                        max: 85
+                    relative: {
+                        min: 5,
+                        max: 70
                     }
                 },
                 B: {
@@ -64,9 +64,9 @@
                         min: 0,
                         max: 100
                     },
-                    stacked: {
-                        min: 15,
-                        max: 85
+                    relative: {
+                        min: 5,
+                        max: 70
                     }
                 }
             };

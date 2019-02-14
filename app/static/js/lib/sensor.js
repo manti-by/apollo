@@ -16,7 +16,7 @@ class Sensor {
             options['unit'] : '';
 
         this.font = 'font' in options ?
-            options['font'] : 'bold 20px Arial';
+            options['font'] : '20px Open Sans';
 
         this.font_color = 'font_color' in options ?
             options['font_color'] : 'rgba(0, 0, 0, .9)';

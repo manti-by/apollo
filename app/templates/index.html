@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="shortcut icon" type="image/png" href="{{ url_for('static', filename='img/favicon.png') }}"/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
           crossorigin="anonymous">
@@ -14,7 +15,7 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar">
             <span class="navbar-brand">Apollo</span>
             <span id="status" class="my-2 text-secondary">
                 Last update: {{ time }}
@@ -51,10 +52,10 @@
                         <div class="form-group col-2">
                             <label for="limit">Limit:</label>
                             <select id="limit" name="limit" class="form-control limit">
-                                <option value="5"{% if options.limit == '5' %} selected{% endif %}">5</option>
-                                <option value="10"{% if options.limit == '10' %} selected{% endif %}>10</option>
-                                <option value="25"{% if options.limit == '25' %} selected{% endif %}>25</option>
-                                <option value="100"{% if options.limit == '100' %} selected{% endif %}>100</option>
+                                <option value="5"{% if options.limit == 5 %} selected{% endif %}>5</option>
+                                <option value="10"{% if options.limit == 10 %} selected{% endif %}>10</option>
+                                <option value="25"{% if options.limit == 25 %} selected{% endif %}>25</option>
+                                <option value="100"{% if options.limit == 100 %} selected{% endif %}>100</option>
                             </select>
                         </div>
                         <div class="form-group col-2">
@@ -79,7 +80,7 @@
                                                    {% if options.type == 'absolute' %}checked{% endif %}>
                                         </div>
                                     </div>
-                                    <label class="form-control" for="type-absolute">
+                                    <label class="form-control" for="type-relative">
                                         Absolute
                                     </label>
                                 </div>
@@ -87,12 +88,12 @@
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <input id="type-stacked" type="radio" name="type"
-                                                   class="type" value="stacked"
-                                                   {% if options.type == 'stacked' %}checked{% endif %}>
+                                                   class="type" value="relative"
+                                                   {% if options.type == 'relative' %}checked{% endif %}>
                                         </div>
                                     </div>
-                                    <label class="form-control" for="type-stacked">
-                                        Stacked
+                                    <label class="form-control" for="type-relative">
+                                        Relative
                                     </label>
                                 </div>
                             </div>
