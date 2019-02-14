@@ -29,12 +29,15 @@
                     <div class="row">
                         <div class="col">
                             <canvas id="plants-latest-temp"></canvas>
+                            <label>Temperature, &deg;C</label>
                         </div>
                         <div class="col">
                             <canvas id="plants-latest-humidity"></canvas>
+                            <label>Humidity, %</label>
                         </div>
                         <div class="col">
                             <canvas id="plants-latest-moisture"></canvas>
+                            <label>Moisture, %</label>
                         </div>
                     </div>
                 </div>
@@ -138,6 +141,7 @@
             integrity="sha256-qlku5J3WO/ehJpgXYoJWC2px3+bZquKChi4oIWrAKoI="
             crossorigin="anonymous"></script>
 
+    <script src="{{ url_for('static', filename='js/lib/sensor.js') }}"></script>
     <script src="{{ url_for('static', filename='js/weather.js') }}"></script>
     <script src="{{ url_for('static', filename='js/plants-latest.js') }}"></script>
     <script src="{{ url_for('static', filename='js/plants-report.js') }}"></script>

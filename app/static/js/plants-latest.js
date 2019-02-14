@@ -5,77 +5,29 @@
     class PlantsLatestWidget {
         constructor() {
             this.status = $('#status');
-            this.temp = $('#plants-latest-temp');
-            this.humidity = $('#plants-latest-humidity');
-            this.moisture = $('#plants-latest-moisture');
+            this.temp = $('#plants-latest-temp').get(0);
+            this.humidity = $('#plants-latest-humidity').get(0);
+            this.moisture = $('#plants-latest-moisture').get(0);
         }
 
         init() {
-            this.temp_chart = new Chart(this.temp, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Current Temperature'],
-                    datasets: [{
-                        data: [0, 100],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(255, 99, 132, .2)'
-                        ]
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        position: 'bottom',
-                        text: 'Temperature, C',
-                    }
-                },
+            this.temp_chart = new Sensor(this.temp, {
+                color: 'rgba(255, 99, 132, 1)',
+                fgcolor: 'rgba(255, 99, 132, .2)',
+                unit: '°C'
             });
-
-            this.humidity_chart = new Chart(this.humidity, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Humidity', 'Max'],
-                    datasets: [{
-                        data: [0, 100],
-                        backgroundColor: [
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(54, 162, 235, .2)'
-                        ]
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        position: 'bottom',
-                        text: 'Humidity, %',
-                    }
-                },
+            this.humidity_chart = new Sensor(this.humidity, {
+                color: 'rgba(54, 162, 235, 1)',
+                fgcolor: 'rgba(54, 162, 235, .2)',
+                unit: '%'
             });
-
-            this.moisture_chart = new Chart(this.moisture, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Moisture', 'Max'],
-                    datasets: [{
-                        data: [0, 100],
-                        backgroundColor: [
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(153, 102, 255, .2)'
-                        ]
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        position: 'bottom',
-                        text: 'Moisture, %'
-                    }
-                },
+            this.moisture_chart = new Sensor(this.moisture, {
+                color: 'rgba(153, 102, 255, 1)',
+                fgcolor: 'rgba(153, 102, 255, .2)',
+                unit: '%'
             });
 
             this.update();
-
             setInterval(
                 () => this.update(),
                 5 * 60 * 1000
@@ -84,20 +36,9 @@
 
         update() {
             $.getJSON('/api?limit=1', (data) => {
-                this.temp_chart.data.datasets[0].data = [
-                    data['temp'][0], 100 - data['temp'][0]
-                ];
-                this.temp_chart.update();
-
-                this.humidity_chart.data.datasets[0].data = [
-                    data['humidity'][0], 100 - data['humidity'][0]
-                ];
-                this.humidity_chart.update();
-
-                this.moisture_chart.data.datasets[0].data = [
-                    data['moisture'][0], 100 - data['moisture'][0]
-                ];
-                this.moisture_chart.update();
+                this.temp_chart.draw(data['temp'][0]);
+                this.humidity_chart.draw(data['humidity'][0]);
+                this.moisture_chart.draw(data['moisture'][0]);
             }).done(() => {
                 let now = new Date();
 
