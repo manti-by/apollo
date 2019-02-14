@@ -81,24 +81,24 @@
                         index: 'temp',
                         label: 'Temperature, C',
                         fill: false,
-                        borderColor: 'rgb(255, 99, 132)',
-                        backgroundColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(119, 201, 197)',
+                        backgroundColor: 'rgb(119, 201, 197)',
                         data: [],
                         yAxesGroup: 'A'
                     }, {
                         index: 'humidity',
                         label: 'Humidity, %',
                         fill: false,
-                        borderColor: 'rgba(54, 162, 235)',
-                        backgroundColor: 'rgba(54, 162, 235)',
+                        borderColor: 'rgba(63, 112, 181)',
+                        backgroundColor: 'rgba(63, 112, 181)',
                         data: [],
                         yAxesGroup: 'B'
                     }, {
                         index: 'moisture',
                         label: 'Moisture, %',
                         fill: false,
-                        borderColor: 'rgb(153, 102, 255)',
-                        backgroundColor: 'rgb(153, 102, 255)',
+                        borderColor: 'rgb(120, 54, 152)',
+                        backgroundColor: 'rgb(120, 54, 152)',
                         data: [],
                         yAxesGroup: 'B'
                     }]

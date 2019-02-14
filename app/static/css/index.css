@@ -3,6 +3,16 @@ nav,
 .card {
     margin-bottom: 20px;
 }
+
 #controls {
     padding: 0 1em;
+}
+
+.plants-latest canvas {
+    width: 100%;
+}
+
+.plants-latest label {
+    display: block;
+    text-align: center;
 }

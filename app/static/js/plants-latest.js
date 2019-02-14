@@ -12,18 +12,18 @@
 
         init() {
             this.temp_chart = new Sensor(this.temp, {
-                color: 'rgba(255, 99, 132, 1)',
-                fgcolor: 'rgba(255, 99, 132, .2)',
+                color: 'rgba(119, 201, 197, 1)',
+                fgcolor: 'rgba(119, 201, 197, .2)',
                 unit: '°C'
             });
             this.humidity_chart = new Sensor(this.humidity, {
-                color: 'rgba(54, 162, 235, 1)',
-                fgcolor: 'rgba(54, 162, 235, .2)',
+                color: 'rgba(63, 112, 181, 1)',
+                fgcolor: 'rgba(63, 112, 181, .2)',
                 unit: '%'
             });
             this.moisture_chart = new Sensor(this.moisture, {
-                color: 'rgba(153, 102, 255, 1)',
-                fgcolor: 'rgba(153, 102, 255, .2)',
+                color: 'rgba(120, 54, 152, 1)',
+                fgcolor: 'rgba(120, 54, 152, .2)',
                 unit: '%'
             });
 
