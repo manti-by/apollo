@@ -40,5 +40,13 @@ export TEMPLATES_AUTO_RELOAD=1
 server:
 	flask run --host=0.0.0.0
 
-flake:
+venv:
+	deactivate | true
+	rm -rf ../venv/
+	virtualenv -p python3 --no-site-packages --prompt=ben- ../venv
+	. ../venv/bin/activate
+
+check:
+	black --py36 app/
+	isort app/*.py
 	flake8

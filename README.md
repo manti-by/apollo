@@ -49,4 +49,10 @@ Setup
 
     */5 * * * *    /home/pi/benjamin/venv/bin/python /home/pi/benjamin/src/app/worker.py
 
+
+Notes
+----
+
+Install locally DHT library on non Raspberry Pi device
     
+    $ pip install --install-option="--force-pi" Adafruit_DHT

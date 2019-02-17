@@ -3,36 +3,26 @@ import sqlite3
 
 from flask import request
 
-DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'db.sqlite')
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db.sqlite")
 
-PERIODS = {
-    'live': 1,
-    'hourly': 12,
-    'daily': 12 * 24,
-    'weekly': 12 * 24 * 7,
-}
+PERIODS = {"live": 1, "hourly": 12, "daily": 12 * 24, "weekly": 12 * 24 * 7}
 
 
-def get_line_chart_data()->tuple:
-    _type = request.args.get('type', 'absolute')
-    limit = request.args.get('limit', 10)
-    group = request.args.get('group', 'hourly')
+def get_data() -> tuple:
+    _type = request.args.get("type", "absolute")
+    limit = request.args.get("limit", 10)
+    group = request.args.get("group", "hourly")
 
     with sqlite3.connect(DB_PATH) as session:
         cursor = session.cursor()
         query_limit = PERIODS.get(group, 1) * int(limit)
         cursor.execute(
-            "SELECT * FROM data ORDER BY datetime DESC LIMIT ?", (query_limit, )
+            "SELECT * FROM data ORDER BY datetime DESC LIMIT ?", (query_limit,)
         )
         session.commit()
         data = cursor.fetchall()[::-1]
 
-        result = {
-            'temp': [],
-            'humidity': [],
-            'moisture': [],
-            'label': [],
-        }
+        result = {"temp": [], "humidity": [], "moisture": [], "label": []}
 
         sum_temp = 0
         sum_humidity = 0
@@ -46,23 +36,28 @@ def get_line_chart_data()->tuple:
             sum_humidity += item[2] or 0
             sum_moisture += item[3] or 0
 
-            if group in ('live', 'hourly'):
+            if group in ("live", "hourly"):
                 label = item[4][11:16]
             else:
                 label = item[4][:10]
 
             if counter % period == 0:
-                result['temp'].append(round(sum_temp / period, 1))
-                result['humidity'].append(round(sum_humidity / period, 1))
-                result['moisture'].append(round(sum_moisture / period, 1))
-                result['label'].append(label)
+                result["temp"].append(round(sum_temp / period, 1))
+                result["humidity"].append(round(sum_humidity / period, 1))
+                result["moisture"].append(round(sum_moisture / period, 1))
+                result["label"].append(label)
 
                 sum_temp = 0
                 sum_humidity = 0
                 sum_moisture = 0
 
-        return result, {
-            'type': _type,
-            'limit': limit,
-            'group': group
-        }
+        return result, {"type": _type, "limit": limit, "group": group}
+
+
+def save_data(t: float, h: int, m: int):
+    with sqlite3.connect(DB_PATH) as connection:
+        cursor = connection.cursor()
+        cursor.execute(
+            "INSERT INTO data (temp, humidity, moisture) VALUES (?, ?, ?)", (t, h, m)
+        )
+        connection.commit()
