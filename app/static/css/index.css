@@ -1,6 +1,6 @@
 body {
     font-family: 'Open Sans', sans-serif;
-    background: #F7F7F7;
+    background: #EEEEEE;
 }
 
 nav,
@@ -17,13 +17,14 @@ nav,
     border: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
     border-radius: 6px;
+    background: #F7F7F7;
 }
 
 .card-header {
     text-align: right;
     color: rgba(72, 72, 77, .3);
     border-bottom: none;
-    background: #FFF;
+    background: #F7F7F7;
 }
 
 .card-header:first-child {

@@ -4,7 +4,7 @@ import Adafruit_DHT
 import Adafruit_GPIO.SPI as SPI
 import Adafruit_MCP3008
 
-from db import save_data
+from .db import save_data
 
 SPI_PORT = 0
 SPI_DEVICE = 0

@@ -2,7 +2,7 @@ from time import localtime, strftime
 
 from flask import Flask, jsonify, render_template
 
-from db import get_data
+from .db import get_data
 
 app = Flask(__name__)
 
