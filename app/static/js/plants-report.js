@@ -42,7 +42,7 @@
                         display: true,
                         scaleLabel: {
                             display: true,
-                            labelString: 'Humidity / Moisture'
+                            labelString: 'Humidity / Moisture / Luminosity'
                         }
                     }]
                 }
@@ -99,6 +99,14 @@
                         fill: false,
                         borderColor: 'rgb(120, 54, 152)',
                         backgroundColor: 'rgb(120, 54, 152)',
+                        data: [],
+                        yAxesGroup: 'B'
+                    }, {
+                        index: 'luminosity',
+                        label: 'Luminosity, %',
+                        fill: false,
+                        borderColor: 'rgb(152, 205, 239)',
+                        backgroundColor: 'rgb(152, 205, 239)',
                         data: [],
                         yAxesGroup: 'B'
                     }]

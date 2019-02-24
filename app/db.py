@@ -22,11 +22,12 @@ def get_data() -> tuple:
         session.commit()
         data = cursor.fetchall()[::-1]
 
-        result = {"temp": [], "humidity": [], "moisture": [], "label": []}
+        result = {"temp": [], "humidity": [], "moisture": [], "luminosity": [], "label": []}
 
         sum_temp = 0
         sum_humidity = 0
         sum_moisture = 0
+        sum_luminosity = 0
         counter = 0
 
         period = PERIODS.get(group)
@@ -35,6 +36,7 @@ def get_data() -> tuple:
             sum_temp += item[1] or 0
             sum_humidity += item[2] or 0
             sum_moisture += item[3] or 0
+            sum_luminosity += item[5] or 0
 
             if group in ("live", "hourly"):
                 label = item[4][11:16]
@@ -45,6 +47,7 @@ def get_data() -> tuple:
                 result["temp"].append(round(sum_temp / period, 1))
                 result["humidity"].append(round(sum_humidity / period, 1))
                 result["moisture"].append(round(sum_moisture / period, 1))
+                result["luminosity"].append(round(sum_luminosity / period, 1))
                 result["label"].append(label)
 
                 sum_temp = 0
@@ -54,10 +57,10 @@ def get_data() -> tuple:
         return result, {"type": _type, "limit": limit, "group": group}
 
 
-def save_data(t: float, h: int, m: int):
+def save_data(t: float, h: int, m: int, l: int):
     with sqlite3.connect(DB_PATH) as connection:
         cursor = connection.cursor()
         cursor.execute(
-            "INSERT INTO data (temp, humidity, moisture) VALUES (?, ?, ?)", (t, h, m)
+            "INSERT INTO data (temp, humidity, moisture, luminosity) VALUES (?, ?, ?, ?)", (t, h, m, l)
         )
         connection.commit()

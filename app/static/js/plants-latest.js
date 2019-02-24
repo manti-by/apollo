@@ -8,6 +8,7 @@
             this.temp = $('#plants-latest-temp').get(0);
             this.humidity = $('#plants-latest-humidity').get(0);
             this.moisture = $('#plants-latest-moisture').get(0);
+            this.luminosity = $('#plants-latest-luminosity').get(0);
         }
 
         init() {
@@ -26,6 +27,11 @@
                 fgcolor: 'rgba(120, 54, 152, .2)',
                 unit: '%'
             });
+            this.luminosity_chart = new Sensor(this.luminosity, {
+                color: 'rgba(152, 205, 239, 1)',
+                fgcolor: 'rgba(152, 205, 239, .2)',
+                unit: '%'
+            });
 
             this.update();
             setInterval(
@@ -39,6 +45,7 @@
                 this.temp_chart.draw(data['temp'][0]);
                 this.humidity_chart.draw(data['humidity'][0]);
                 this.moisture_chart.draw(data['moisture'][0]);
+                this.luminosity_chart.draw(data['luminosity'][0]);
             }).done(() => {
                 let now = new Date();
 
