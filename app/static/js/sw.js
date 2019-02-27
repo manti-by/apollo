@@ -1,4 +1,5 @@
 const STATIC_CACHE = 'static-cache',
+    DYNAMIC_CACHE = 'dynamic-cache',
     APP_RESOURCES = [
         '/static/manifest.json',
 
@@ -9,12 +10,7 @@ const STATIC_CACHE = 'static-cache',
         '/static/font/open-sans-regular-latin.woff2',
         '/static/img/favicon.png',
 
-        '/static/js/lib/jquery-3.3.1.min.js',
-        '/static/js/lib/popper-1.14.3.min.js',
-        '/static/js/lib/bootstrap-4.1.3.min.js',
-        '/static/js/lib/chartjs-2.7.3.min.js',
-        '/static/js/lib/handlebars-4.0.12.min.js',
-
+        '/static/js/lib/compiled.min.js',
         '/static/js/lib/sensor.js',
         '/static/js/widget/plants-latest.js',
         '/static/js/widget/plants-report.js',
@@ -69,7 +65,7 @@ self.addEventListener('fetch', (event) => {
                         }
 
                         // Cache app resources
-                        caches.open(STATIC_CACHE)
+                        caches.open(DYNAMIC_CACHE)
                             .then((cache) => {
                                 cache.put(event.request, response.clone());
                             });

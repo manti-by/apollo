@@ -1,10 +1,12 @@
 from time import localtime, strftime
 
 from flask import Flask, jsonify, render_template
+from flask_static_compress import FlaskStaticCompress
 
 from .db import get_data
 
 app = Flask(__name__)
+compress = FlaskStaticCompress(app)
 
 
 @app.route("/")

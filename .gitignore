@@ -3,6 +3,7 @@
 db.sqlite
 
 .idea/
+app/static/sdist/
 
 *.pyc
 *~
