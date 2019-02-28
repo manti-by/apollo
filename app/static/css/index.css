@@ -56,11 +56,10 @@ nav,
     border-radius: 6px;
 }
 
-.plants-latest canvas {
-    width: 100%;
+.plants-latest {
+    text-align: center;
 }
 
 .plants-latest label {
     display: block;
-    text-align: center;
 }

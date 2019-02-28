@@ -9,6 +9,24 @@
             this.humidity = $('#plants-latest-humidity').get(0);
             this.moisture = $('#plants-latest-moisture').get(0);
             this.luminosity = $('#plants-latest-luminosity').get(0);
+
+            let window_width = $(window).width(),
+                width, height;
+
+            if (window_width > 1000) {
+                width = 175;
+                height = 175;
+            } else if (window_width > 425) {
+                width = 250;
+                height = 250;
+            } else {
+                width = 325;
+                height = 325;
+            }
+
+            $('.plants-latest canvas')
+                .attr('width', width)
+                .attr('height', height);
         }
 
         init() {

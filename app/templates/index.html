@@ -4,7 +4,7 @@
     <title>Benjamin</title>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <meta name="author" content="Alexander Chaika">
     <meta name="description" content="Raspberry Pi app for monitoring Ficus Benjamina health.">
@@ -57,7 +57,7 @@
                 </div>
                 <div class="card-body">
                     <form id="controls" action="/" method="get" class="row">
-                        <div class="form-group col-2">
+                        <div class="form-group col-12 col-md-6 col-lg-3">
                             <label for="limit">Limit:</label>
                             <select id="limit" name="limit" class="form-control limit">
                                 <option value="5"{% if options.limit == 5 %} selected{% endif %}>5</option>
@@ -66,7 +66,7 @@
                                 <option value="100"{% if options.limit == 100 %} selected{% endif %}>100</option>
                             </select>
                         </div>
-                        <div class="form-group col-2">
+                        <div class="form-group col-12 col-md-6 col-lg-3">
                             <label for="group">Group:</label>
                             <select id="group" name="group" class="form-control group">
                                 <option value="live"{% if options.group == 'live' %} selected{% endif %}>Live</option>
@@ -75,12 +75,12 @@
                                 <option value="monthly"{% if options.group == 'monthly' %} selected{% endif %}>Monthly</option>
                             </select>
                         </div>
-                        <div class="form-group col-4">
+                        <div class="form-group col-12 col-lg-6 d-none">
                             <div>
                                 <label>Graph Type:</label>
                             </div>
                             <div class="row">
-                                <div class="input-group col-6">
+                                <div class="input-group col-12 col-sm-6">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <input id="type-absolute" type="radio" name="type"
@@ -92,7 +92,7 @@
                                         Absolute
                                     </label>
                                 </div>
-                                <div class="input-group col-6">
+                                <div class="input-group col-12 col-sm-6">
                                     <div class="input-group-prepend">
                                         <div class="input-group-text">
                                             <input id="type-relative" type="radio" name="type"
@@ -110,7 +110,7 @@
                     <canvas id="plants-report"></canvas>
                 </div>
             </div>
-            <div id="weather"></div>
+            <div id="weather" class="weather"></div>
         </main>
     </div>
 
@@ -122,11 +122,23 @@
             </div>
             <div class="card-body">
                 <div class="card-text">
-                    <div class="row">
-                        <div class="col">Temp: {{ temp }} &deg;C</div>
-                        <div class="col">Wind: {{ wind }} m/s {{ wind_dir }}</div>
-                        <div class="col">Pressure: {{ pressure }} mmHg</div>
-                        <div class="col"><img src="{{ icon }}" alt="weather"></div>
+                    <div class="row justify-content-end align-items-center">
+                        <div class="col-3 text-center">
+                            <img src="{{ icon }}" alt="weather" class="icon">
+                        </div>
+                        <div class="col-9">
+                            <div class="row justify-content-start align-items-center">
+                                <div class="col-12 col-md-4">
+                                    Temp: {{ temp }} &deg;C
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    Wind: {{ wind }} m/s {{ wind_dir }}
+                                </div>
+                                <div class="col-12 col-md-4">
+                                    Pressure: {{ pressure }} mmHg
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,5 @@
 #.gitignore
 
-db.sqlite
-
 .idea/
 app/static/sdist/
 

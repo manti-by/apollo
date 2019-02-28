@@ -6,9 +6,11 @@
         constructor() {
             this.status = $('#status');
             this.chart = $('#plants-report');
+            this.is_mobile = $(window).width() <= 425;
 
             this.options = {
                 responsive: true,
+                aspectRatio: this.is_mobile ? 1 : 2,
                 legend: {
                     position: 'bottom',
                 },
