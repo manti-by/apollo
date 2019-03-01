@@ -39,6 +39,7 @@ nav,
 }
 
 .card {
+    height: calc(100% - 20px);
     border: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
     border-radius: 6px;
@@ -46,8 +47,12 @@ nav,
 }
 
 .card-header {
+    position: relative;
+    top: 1rem;
+    font-size: 1.5rem;
+    line-height: 1rem;
     text-align: right;
-    color: rgba(72, 72, 77, .3);
+    color: rgba(72, 72, 77, .1);
     border-bottom: none;
     background: #F7F7F7;
 }

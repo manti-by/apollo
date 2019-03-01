@@ -3,7 +3,9 @@
     'use strict';
 
     $.weather.init();
-    $.plants_report.init();
+    $.datetime.init();
+
     $.plants_latest.init();
+    $.plants_report.init();
 
 })(jQuery);
