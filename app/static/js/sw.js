@@ -6,8 +6,11 @@ const STATIC_CACHE = 'static-cache',
         '/static/css/lib/bootstrap.min.css',
         '/static/css/index.css',
 
+        '/static/font/material-icons.woff2',
         '/static/font/open-sans-regular-cyrillic.woff2',
+        '/static/font/open-sans-medium-cyrillic.woff2',
         '/static/font/open-sans-regular-latin.woff2',
+        '/static/font/open-sans-medium-latin.woff2',
         '/static/img/favicon.png',
 
         '/static/js/lib/compiled.min.js',

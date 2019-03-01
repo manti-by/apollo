@@ -68,7 +68,7 @@
                     .removeClass('text-danger')
                     .addClass('text-secondary')
                     .text(
-                        'Last update: ' + now.getHours() + ':' + now.getMinutes()
+                        'Last update: ' + now.toLocaleTimeString()
                     );
             }).fail(() => {
                 this.status

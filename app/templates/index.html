@@ -26,8 +26,8 @@
             </span>
         </nav>
         <main class="row">
-            <div id="weather" class="weather col-12 col-lg-6 d-table-cell"></div>
             <div id="datetime" class="datetime col-12 col-lg-6 d-table-cell"></div>
+            <div id="weather" class="weather col-12 col-lg-6 d-table-cell"></div>
 
             <div class="col-12">
                 <div class="card plants-latest">
@@ -135,14 +135,17 @@
                         </div>
                         <div class="col-9">
                             <div class="row justify-content-start align-items-baseline">
-                                <div class="col-12 col-md-4 lead">
-                                    Temp: {{ temp }} &deg;C
+                                <div class="col-12 col-md-4">
+                                    Temp:<br> {{ temp }} &deg;C
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    Wind: {{ wind }} m/s {{ wind_dir }}
+                                    Wind:<br> {{ wind }} m/s
+                                    <span class="wind-direction">
+                                        <i class="material-icons">trending_flat</i>
+                                    </span>
                                 </div>
                                 <div class="col-12 col-md-4">
-                                    Pressure: {{ pressure }} mmHg
+                                    Pressure:<br> {{ pressure }} mmHg
                                 </div>
                             </div>
                         </div>
@@ -160,7 +163,7 @@
             <div class="card-body">
                 <div class="card-text">
                     <div class="row justify-content-end align-items-center">
-                        <div class="col-6 text-center date lead">
+                        <div class="col-6 text-center date">
                             {{ date }}
                         </div>
                         <div class="col-6 text-center time">

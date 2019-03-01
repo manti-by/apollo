@@ -17,7 +17,7 @@
             this.update();
 
             setInterval(
-                () => this.update(), 60 * 1000
+                () => this.update(), 1000
             );
         }
 
