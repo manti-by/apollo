@@ -60,6 +60,10 @@ nav,
     text-align: center;
 }
 
+.plants-latest canvas {
+    max-width: 80%;
+}
+
 .plants-latest label {
     display: block;
 }

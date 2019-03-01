@@ -11,22 +11,19 @@
             this.luminosity = $('#plants-latest-luminosity').get(0);
 
             let window_width = $(window).width(),
-                width, height;
+                length;
 
             if (window_width > 1000) {
-                width = 175;
-                height = 175;
+                length = 200;
             } else if (window_width > 425) {
-                width = 250;
-                height = 250;
+                length = 250;
             } else {
-                width = 325;
-                height = 325;
+                length = 300;
             }
 
             $('.plants-latest canvas')
-                .attr('width', width)
-                .attr('height', height);
+                .attr('width', length)
+                .attr('height', length);
         }
 
         init() {
