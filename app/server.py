@@ -1,6 +1,6 @@
 from time import localtime, strftime
 
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from flask_static_compress import FlaskStaticCompress
 
 from .db import get_data
@@ -17,9 +17,12 @@ def index():
     )
 
 
-@app.route("/api")
+@app.route("/api", methods=["GET", "POST"])
 def api():
-    return jsonify(get_data()[0])
+    if request.method == "GET":
+        return jsonify(get_data()[0])
+    else:
+        return jsonify('OK')
 
 
 if __name__ == "__main__":
