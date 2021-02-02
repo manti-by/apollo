@@ -1,76 +1,75 @@
-Apollo IoT App
+Apollo IoT module
 ====
 
-[![Adafruit](https://img.shields.io/pypi/pyversions/Adafruit-MCP3008.svg)](https://github.com/adafruit/)
+[![Python3.8](https://img.shields.io/badge/Python-3.8-green)](https://www.python.org/downloads/release/python-386/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![License](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/manti-by/Apollo/master/LICENSE)  
 
 About
 ----
 
-Raspberry Pi monitoring app
+Raspberry Pi monitoring app, a satellite for [Helios app](https://github.com/manti-by/helios)
 
 Author: Alexander Chaika <manti.by@gmail.com>
 
-Source link: https://github.com/manti-by/Apollo/
+Source link: https://github.com/manti-by/apollo/
 
 Requirements:
 
-- Raspberry Pi
-- MCP3002 AD converter (v1 - MCP3008)
+- Raspberry Pi 2 Model B
+- MCP3002 AD converter (MCP3008 in v1)
 - Soil Moisture sensor
 - Light sensor
 - DHT22 sensor
+- Camera Module OV5647 (new in v3)
+- GSM Module SIM800C (new in v3)
 
-First version
+Alpha version
 ----
 
-![Apollo](media/v1.jpg)
+![Apollo](media/alpha.jpg)
 
-Second version
+Beta version
 ----
 
-![Apollo](media/v2.jpg)
+![Apollo](media/beta.jpg)
+
+First release candidate
+----
+
+![Apollo](media/rc1.jpg)
 
 Setup Apollo application
 ----
 
-1. Install python pip and lessc
+1. Install python3.8, pip, virtualenv and sqlite3
 
-        $ sudo apt install -y python-pip sqlite3 supervisor
-        $ sudo npm install -g less
+        $ sudo apt install -y python-pip virtualenv sqlite3
 
-2. Install, create and activate virtualenv
+2. Create and activate virtualenv
 
-        $ sudo pip install virtualenv
-        $ virtualenv -p python3 --no-site-packages --prompt=apollo- venv
-        $ source venv/bin/activate
+        $ virtualenv -p python3 --prompt=apollo- /home/pi/apollo/venv
+        $ source /home/pi/apollo/venv/bin/activate
 
 3. Clone sources and install pip packages
 
-        $ mkdir apollo/ && cd apollo/
-        $ git clone https://github.com/manti-by/Apollo.git src
-        $ pip install -r src/app/requirements.txt
-    
-4. Run flask server under supervisor
+        $ mkdir /home/pi/apollo/ && cd /home/pi/apollo/
+        $ git clone https://github.com/manti-by/apollo.git src
+        $ pip install -r src/requirements/dev.txt
 
-        $ sudo ln -s /home/pi/apollo/src/svctl.conf /etc/supervisorctl/conf.d/apollo.conf
-        $ sudo supervisorctl update
+4. Install crontabs
 
-5. Install crontabs
-
-        */5 * * * *       /home/pi/apollo/venv/bin/python /home/pi/apollo/src/app/worker.py
-        2-59/5 * * * *    raspistill -o /home/pi/images/$(date +\%Y-\%m-\%d_\%H-\%M-\%S).jpg
-        0 * * * *         find /home/pi/images -name '*.jpg' -type f -mmin +480 -delete
+        */5 * * * *    cd /home/pi/apollo/src/ && /home/pi/apollo/venv/bin/python -m apollo.sensors
+        2-59/5 * * * * raspistill -o /home/pi/apollo/data/photo/$(date +\%Y-\%m-\%d_\%H-\%M-\%S).jpg
+        4-59/5 * * * * cd /home/pi/apollo/src/ && /home/pi/apollo/venv/bin/python -m apollo.proxy
+        0 * * * *      find /home/pi/apollo/data/photo -name '*.jpg' -type f -mmin +480 -delete
 
 
 Setup Helios application
 ----
 
-1. Install python and necessary libraries
-
-        $ sudo apt install -y build-essential ccache git zlib1g-dev python3.8 python3.8-dev \
-            libncurses5:i386 libstdc++6:i386 zlib1g:i386 openjdk-8-jdk unzip ant ccache autoconf libtool libffi-dev
+Please check [README.md](https://github.com/manti-by/helios/blob/master/README.md) in Helios repository
+for more details.
 
 
 Notes
