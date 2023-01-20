@@ -3,5 +3,9 @@
 .idea/
 .env
 
-*.pyc
-*~
+__pycache__/
+.pytest_cache/
+*.py[cod]
+*$py.class
+
+.python-version

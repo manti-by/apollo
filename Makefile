@@ -13,16 +13,8 @@ endef
 
 export SENSORS_MIGRATION_SCRIPT
 migrate:
-	sqlite3 /home/pi/apollo/data/db.sqlite "$$SENSORS_MIGRATION_SCRIPT"
-
-
-pip:
-	pip install -Ur requirements/dev.txt
-
-venv:
-	rm -rf ../venv/apollo/
-	virtualenv -p python3.8 --prompt=apollo- ../venv/apollo
+	sqlite3 /home/manti/www/apollo/data/db.sqlite "$$SENSORS_MIGRATION_SCRIPT"
 
 check:
-	black --target-version py38 apollo/
-	flake8
+	black apollo/
+	flake8 apollo/
