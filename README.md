@@ -8,7 +8,7 @@ Apollo IoT module
 About
 ----
 
-Raspberry Pi monitoring app, a satellite for [Helios app](https://github.com/manti-by/helios/tree/swarm)
+Raspberry Pi monitoring app, a satellite for [Helios Swarm](https://github.com/manti-by/helios/tree/swarm)
 
 Author: Alexander Chaika <manti.by@gmail.com>
 
@@ -19,28 +19,13 @@ Requirements:
 - Raspberry Pi 2 Model B
 - DHT22 sensor
 
-Alpha version
-----
-
-![Apollo](media/alpha.jpg)
-
-Beta version
-----
-
-![Apollo](media/beta.jpg)
-
-First release candidate
-----
-
-![Apollo](media/rc1.jpg)
-
-Setup Apollo application
+Setup Apollo Swarm application
 ----
 
 1. Install python3.9, pip, virtualenv and sqlite3
 
     ```shell
-    $ sudo apt install -y python-pip virtualenv sqlite3
+    $ sudo apt install -y python3-pip virtualenv sqlite3
     ```
    
 2. Create and activate virtualenv
@@ -54,7 +39,7 @@ Setup Apollo application
 
     ```shell
     $ mkdir /home/manti/app/
-    $ git clone https://github.com/manti-by/apollo.git app/
+    $ git clone -b swarm https://github.com/manti-by/apollo.git app/
     $ pip install -r app/requirements.txt
     ```
 
@@ -74,5 +59,5 @@ Setup Apollo application
 Setup Helios application
 ----
 
-Please check [README.md](https://github.com/manti-by/helios/blob/swarm/README.md) in Helios repository
+Please check [README.md](https://github.com/manti-by/helios/tree/swarm) in Helios Swarm repository
 for more details.
