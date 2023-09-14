@@ -1,28 +1,23 @@
 Apollo IoT module
 ====
 
-[![Python3.8](https://img.shields.io/badge/Python-3.8-green)](https://www.python.org/downloads/release/python-386/)
+[![Python3.9](https://img.shields.io/badge/Python-3.9-green)](https://www.python.org/downloads/release/python-392/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
-[![License](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/manti-by/Apollo/master/LICENSE)  
+[![License](https://img.shields.io/badge/license-BSD-blue.svg)](https://raw.githubusercontent.com/manti-by/Apollo/master/LICENSE)
 
 About
 ----
 
-Raspberry Pi monitoring app, a satellite for [Helios app](https://github.com/manti-by/helios)
+Raspberry Pi monitoring app, a satellite for [Helios app](https://github.com/manti-by/helios/tree/swarm)
 
 Author: Alexander Chaika <manti.by@gmail.com>
 
-Source link: https://github.com/manti-by/apollo/
+Source link: https://github.com/manti-by/apollo/tree/swarm
 
 Requirements:
 
 - Raspberry Pi 2 Model B
-- MCP3002 AD converter (MCP3008 in v1)
-- Soil Moisture sensor
-- Light sensor
 - DHT22 sensor
-- Camera Module OV5647 (new in v3)
-- GSM Module SIM800C (new in v3)
 
 Alpha version
 ----
@@ -42,39 +37,42 @@ First release candidate
 Setup Apollo application
 ----
 
-1. Install python3.8, pip, virtualenv and sqlite3
+1. Install python3.9, pip, virtualenv and sqlite3
 
-        $ sudo apt install -y python-pip virtualenv sqlite3
-
+    ```shell
+    $ sudo apt install -y python-pip virtualenv sqlite3
+    ```
+   
 2. Create and activate virtualenv
 
-        $ virtualenv -p python3 --prompt=apollo- /home/pi/apollo/venv
-        $ source /home/pi/apollo/venv/bin/activate
-
+    ```shell
+    $ virtualenv -p python3 --prompt=apollo- /home/manti/venv
+    $ source /home/manti/venv/bin/activate
+    ```
+   
 3. Clone sources and install pip packages
 
-        $ mkdir /home/pi/apollo/ && cd /home/pi/apollo/
-        $ git clone https://github.com/manti-by/apollo.git src
-        $ pip install -r src/requirements/dev.txt
+    ```shell
+    $ mkdir /home/manti/app/
+    $ git clone https://github.com/manti-by/apollo.git app/
+    $ pip install -r app/requirements.txt
+    ```
 
 4. Install crontabs
 
-        */5 * * * *    cd /home/pi/apollo/src/ && /home/pi/apollo/venv/bin/python -m apollo.sensors
-        2-59/5 * * * * raspistill -o /home/pi/apollo/data/photo/$(date +\%Y-\%m-\%d_\%H-\%M-\%S).jpg
-        4-59/5 * * * * cd /home/pi/apollo/src/ && /home/pi/apollo/venv/bin/python -m apollo.proxy
-        0 * * * *      find /home/pi/apollo/data/photo -name '*.jpg' -type f -mmin +480 -delete
+    ```
+    */5 * * * *    cd /home/pi/apollo/src/ && /home/pi/apollo/venv/bin/python -m apollo.sensors
+    4-59/5 * * * * cd /home/pi/apollo/src/ && /home/pi/apollo/venv/bin/python -m apollo.proxy
+    ```
 
+5. Run server
 
+    ```shell
+    $ uvicorn apollo.server:app --host 0.0.0.0 --reload
+    ```
+   
 Setup Helios application
 ----
 
-Please check [README.md](https://github.com/manti-by/helios/blob/master/README.md) in Helios repository
+Please check [README.md](https://github.com/manti-by/helios/blob/swarm/README.md) in Helios repository
 for more details.
-
-
-Notes
-----
-
-Install locally DHT library on non Raspberry Pi device
-
-        $ pip install --install-option="--force-pi" Adafruit_DHT

@@ -1,0 +1,17 @@
+[Unit]
+Description=Apollo Swarm server
+After=network.target
+
+[Service]
+User=manti
+Group=manti
+Restart=always
+WorkingDirectory=/home/manti/app/
+EnvironmentFile=/home/manti/app/.env
+ExecStart=/home/manti/venv/bin/uvicorn apollo.server:app --host 0.0.0.0 --reload
+StandardOutput=file:/home/manti/logs/server-access.log
+StandardError=file:/home/manti/logs/server-error.log
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
