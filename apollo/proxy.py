@@ -29,7 +29,7 @@ def get_token() -> str | None:
         return token
 
 
-def send_data(token: str, data: dict) -> bool:
+def send_data(token: str, data: list[dict]) -> bool:
     response = requests.post(
         f"{HELIOS_URL}/api/v1/sensors/",
         json=data,

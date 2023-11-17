@@ -7,7 +7,13 @@ HELIOS_PASS = os.environ.get("HELIOS_PASS")
 DB_PATH = os.environ.get("DB_PATH", "/home/manti/data/db.sqlite")
 TOKEN_PATH = os.environ.get("TOKEN_PATH", "/home/manti/data/token.txt")
 
-DHT22_CHANNEL = 25
+DHT22_CHANNEL = 4
+
+SENSORS = {
+    "CORUSCANT": "Hall",
+    "CENTAX-1": "Garage",
+    "CENTAX-2": "2nd floor"
+}
 
 LOGGING = {
     "version": 1,
@@ -20,18 +26,18 @@ LOGGING = {
     },
     "handlers": {
         "console": {
-            "level": "DEBUG",
+            "level": "INFO",
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
         "filesystem": {
             "level": "WARNING",
             "class": "logging.FileHandler",
-            "filename": os.environ.get("LOG_PATH", "/home/manti/logs/apollo.log"),
+            "filename": os.environ.get("LOG_PATH", "/home/manti/logs/app.log"),
             "formatter": "standard",
         },
     },
     "loggers": {
-        "": {"handlers": ["console", "filesystem"], "level": "DEBUG", "propagate": True}
+        "": {"handlers": ["console", "filesystem"], "level": "INFO", "propagate": True}
     },
 }

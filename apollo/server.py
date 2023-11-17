@@ -9,8 +9,8 @@ app = FastAPI()
 
 
 class Sensor(BaseModel):
-    name: str
-    temp: int
+    sensor_id: str
+    temp: Decimal
     humidity: Decimal
 
 
@@ -21,4 +21,4 @@ async def get():
 
 @app.post("/")
 async def post(sensor: Sensor):
-    save_sensors_data(sensor.name, sensor.temp, sensor.humidity)
+    save_sensors_data(sensor.sensor_id, sensor.temp, sensor.humidity)

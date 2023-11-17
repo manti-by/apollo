@@ -9,6 +9,6 @@ logger = logging.getLogger(__name__)
 
 
 if __name__ == "__main__":
-    humidity, temp = Adafruit_DHT.read_retry(Adafruit_DHT.DHT22, DHT22_CHANNEL)
-    save_sensors_data("main", temp, humidity)
+    humidity, temp = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, DHT22_CHANNEL)
+    save_sensors_data("CORUSCANT", temp, humidity)
     logger.info(f"Temp: {temp} *C, humidity: {humidity}")
