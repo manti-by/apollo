@@ -17,7 +17,16 @@ def dict_factory(cursor: Cursor, row: dict):
     return result
 
 
-def get_sensors_data() -> list[dict]:
+def get_sensors_data(limit: int = 500) -> list[dict]:
+    with sqlite3.connect(DB_PATH, detect_types=sqlite3.PARSE_DECLTYPES) as session:
+        session.row_factory = dict_factory
+        cursor = session.cursor()
+        cursor.execute("SELECT * FROM data ORDER BY created_at DESC LIMIT ?", (limit,))
+        session.commit()
+        return cursor.fetchall()
+
+
+def get_latest_sensors_data() -> list[dict]:
     with sqlite3.connect(DB_PATH, detect_types=sqlite3.PARSE_DECLTYPES) as session:
         session.row_factory = dict_factory
         cursor = session.cursor()

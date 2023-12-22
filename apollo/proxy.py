@@ -6,7 +6,7 @@ import os
 import requests
 
 from apollo.conf import HELIOS_PASS, HELIOS_URL, HELIOS_USER, LOGGING, TOKEN_PATH
-from apollo.database import get_sensors_data
+from apollo.database import get_latest_sensors_data
 
 logging.config.dictConfig(LOGGING)
 logger = logging.getLogger(__name__)
@@ -44,7 +44,7 @@ if __name__ == "__main__":
         logger.error("Can't retrieve token, check credentials")
         exit(-1)
 
-    if not (sensors_data := get_sensors_data()):
+    if not (sensors_data := get_latest_sensors_data()):
         logger.error("Can't get data from database")
         exit(-1)
 

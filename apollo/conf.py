@@ -1,4 +1,5 @@
 import os
+from decimal import Decimal
 
 HELIOS_URL = "https://helios.manti.by"
 HELIOS_USER = os.environ.get("HELIOS_USER")
@@ -10,9 +11,31 @@ TOKEN_PATH = os.environ.get("TOKEN_PATH", "/home/manti/data/token.txt")
 DHT22_CHANNEL = 4
 
 SENSORS = {
-    "CORUSCANT": "Hall",
-    "CENTAX-1": "Garage",
-    "CENTAX-2": "2nd floor"
+    "CORUSCANT": {
+        "location": "Hall",
+        "temp_offset": Decimal(-5.1),
+        "humidity_offset": Decimal(6.0),
+    },
+    "CENTAX-1": {
+        "location": "Garage",
+        "temp_offset": Decimal(-4.4),
+        "humidity_offset": Decimal(8.0),
+    },
+    "CENTAX-2": {
+        "location": "2nd floor",
+        "temp_offset": Decimal(-6.1),
+        "humidity_offset": Decimal(9.0),
+    },
+    "CENTAX-3": {
+        "location": "Work room",
+        "temp_offset": Decimal(-4.4),
+        "humidity_offset": Decimal(8.0),
+    },
+    "CENTAX-4": {
+        "location": "Bedroom",
+        "temp_offset": Decimal(-6.1),
+        "humidity_offset": Decimal(9.0),
+    },
 }
 
 LOGGING = {
@@ -30,14 +53,14 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
-        "filesystem": {
+        "file": {
             "level": "WARNING",
             "class": "logging.FileHandler",
-            "filename": os.environ.get("LOG_PATH", "/home/manti/logs/app.log"),
+            "filename": "/home/manti/logs/app.log",
             "formatter": "standard",
         },
     },
     "loggers": {
-        "": {"handlers": ["console", "filesystem"], "level": "INFO", "propagate": True}
+        "": {"handlers": ["console", "file"], "level": "INFO", "propagate": True}
     },
 }
