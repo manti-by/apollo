@@ -1,0 +1,36 @@
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: check-ast
+      - id: check-docstring-first
+      - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+      - id: fix-byte-order-marker
+      - id: pretty-format-json
+      - id: trailing-whitespace
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.0
+    hooks:
+      - id: pyupgrade
+        args: [--py39-plus]
+  - repo: local
+    hooks:
+    - id: black
+      name: black-local
+      entry: black
+      language: python
+      types: [python]
+      exclude: .+/settings/.+
+      pass_filenames: true
+    - id: prospector
+      name: prospector-local
+      entry: prospector --messages-only
+      language: python
+      types: [python]
+      exclude: .+/settings/.+
+      pass_filenames: true
