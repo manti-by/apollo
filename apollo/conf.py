@@ -5,7 +5,8 @@ HELIOS_URL = "https://helios.manti.by"
 HELIOS_USER = os.environ.get("HELIOS_USER")
 HELIOS_PASS = os.environ.get("HELIOS_PASS")
 
-DB_PATH = os.environ.get("DB_PATH", "/home/manti/data/db.sqlite")
+DATABASE_URL = os.environ.get("DB_PATH", "postgresql://apollo:apollo@localhost/apollo")
+
 TOKEN_PATH = os.environ.get("TOKEN_PATH", "/home/manti/data/token.txt")
 
 DHT22_CHANNEL = 4
@@ -60,7 +61,5 @@ LOGGING = {
             "formatter": "standard",
         },
     },
-    "loggers": {
-        "": {"handlers": ["console", "file"], "level": "INFO", "propagate": True}
-    },
+    "loggers": {"": {"handlers": ["console", "file"], "level": "INFO", "propagate": True}},
 }
