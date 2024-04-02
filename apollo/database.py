@@ -25,7 +25,7 @@ def get_latest_sensors_data(connection: Connection) -> list[dict]:
         return result
 
 
-def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal, humidity: Decimal):
+def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal):
     with connection.cursor() as cursor:
-        cursor.execute("INSERT INTO data (sensor_id, temp, humidity) VALUES (%s, %s, %s)", (sensor_id, temp, humidity))
+        cursor.execute("INSERT INTO data (sensor_id, temp) VALUES (%s, %s)", (sensor_id, temp))
         connection.commit()

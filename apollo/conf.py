@@ -1,41 +1,20 @@
 import os
 from decimal import Decimal
 
-HELIOS_URL = "https://helios.manti.by"
-HELIOS_USER = os.environ.get("HELIOS_USER")
-HELIOS_PASS = os.environ.get("HELIOS_PASS")
-
-DATABASE_URL = os.environ.get("DB_PATH", "postgresql://apollo:apollo@localhost/apollo")
-
-TOKEN_PATH = os.environ.get("TOKEN_PATH", "/home/manti/data/token.txt")
-
-DHT22_CHANNEL = 4
+DATABASE_URL = os.getenv("DB_PATH", "postgresql://apollo:apollo@localhost/apollo")
 
 SENSORS = {
-    "CORUSCANT": {
-        "location": "Hall",
-        "temp_offset": Decimal(-5.1),
-        "humidity_offset": Decimal(6.0),
+    "reactor": {
+        "address": "Hall",
+        "offset": Decimal(0.0),
     },
-    "CENTAX-1": {
-        "location": "Garage",
-        "temp_offset": Decimal(-4.4),
-        "humidity_offset": Decimal(8.0),
+    "coolant": {
+        "address": "Garage",
+        "offset": Decimal(0.0),
     },
-    "CENTAX-2": {
-        "location": "2nd floor",
-        "temp_offset": Decimal(-6.1),
-        "humidity_offset": Decimal(9.0),
-    },
-    "CENTAX-3": {
-        "location": "Work room",
-        "temp_offset": Decimal(-4.4),
-        "humidity_offset": Decimal(8.0),
-    },
-    "CENTAX-4": {
-        "location": "Bedroom",
-        "temp_offset": Decimal(-6.1),
-        "humidity_offset": Decimal(9.0),
+    "storage": {
+        "address": "",
+        "offset": Decimal(0.0),
     },
 }
 

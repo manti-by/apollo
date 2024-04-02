@@ -21,13 +21,11 @@ class Sensor(BaseModel):
 
     sensor_id: str
     temp: Decimal
-    humidity: Decimal
 
 
 def filter_results(data):
     for item in data:
-        item["temp"] = round(Decimal(item["temp"]) + SENSORS[item["sensor_id"]]["temp_offset"], ndigits=2)
-        item["humidity"] = round(Decimal(item["humidity"]) + SENSORS[item["sensor_id"]]["humidity_offset"], ndigits=2)
+        item["temp"] = round(Decimal(item["temp"]) + SENSORS[item["sensor_id"]]["offset"], ndigits=2)
     return data
 
 
@@ -45,5 +43,5 @@ async def batch(limit: int = 500, offset: int = 0) -> list[Sensor]:
 
 @app.post("/")
 async def post(sensor: Sensor):
-    save_sensors_data(connection=connection, sensor_id=sensor.sensor_id, temp=sensor.temp, humidity=sensor.humidity)
+    save_sensors_data(connection=connection, sensor_id=sensor.sensor_id, temp=sensor.temp)
     return "Created"
