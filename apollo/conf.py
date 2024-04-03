@@ -1,13 +1,7 @@
 import os
 from decimal import Decimal
 
-HELIOS_URL = "https://helios.manti.by"
-HELIOS_USER = os.environ.get("HELIOS_USER")
-HELIOS_PASS = os.environ.get("HELIOS_PASS")
-
 DATABASE_URL = os.environ.get("DB_PATH", "postgresql://apollo:apollo@localhost/apollo")
-
-TOKEN_PATH = os.environ.get("TOKEN_PATH", "/home/manti/data/token.txt")
 
 DHT22_CHANNEL = 4
 
