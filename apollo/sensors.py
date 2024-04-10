@@ -19,6 +19,6 @@ if __name__ == "__main__":
     for sensor_id, data in SENSORS.items():
         sensor = wire.find(data["address"])
         sensor.change_resolution(resolution=Resolution.X0_25)
-        temp = Decimal(sensor.get_temperature())
+        temp = round(Decimal(sensor.get_temperature()), 2)
         save_sensors_data(connection=connection, sensor_id=sensor_id, temp=temp)
-        logger.info(f"Temp: {temp} *C")
+        logger.info(f"Temp for {sensor_id}: {temp} *C")

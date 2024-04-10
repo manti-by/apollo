@@ -5,11 +5,13 @@ from decimal import Decimal
 from typing import Optional
 
 from fastapi import FastAPI
+from fastapi.responses import PlainTextResponse
 from pydantic import BaseModel, Field
 from psycopg2.extras import DictCursor
 
 from apollo.conf import SENSORS, DATABASE_URL
 from apollo.database import get_latest_sensors_data, save_sensors_data, get_sensors_data
+from apollo.services import print_sensors_data
 
 connection = psycopg2.connect(DATABASE_URL, cursor_factory=DictCursor)
 app = FastAPI()
@@ -23,22 +25,32 @@ class Sensor(BaseModel):
     temp: Decimal
 
 
-def filter_results(data):
-    for item in data:
-        item["temp"] = round(Decimal(item["temp"]) + SENSORS[item["sensor_id"]]["offset"], ndigits=2)
-    return data
+def get_fixed_temp(item: dict) -> Decimal:
+    return round(Decimal(item["temp"]) + SENSORS[item["sensor_id"]]["offset"], ndigits=1)
 
 
 @app.get("/")
-async def get() -> list[Sensor]:
+async def get() -> dict[str, Sensor]:
     original_data = get_latest_sensors_data(connection=connection)
-    return filter_results(original_data)
+    for _, item in original_data.items():
+        item["temp"] = get_fixed_temp(item)
+    return original_data
+
+
+@app.get("/print/", response_class=PlainTextResponse)
+async def get() -> str:
+    original_data = get_latest_sensors_data(connection=connection)
+    for _, item in original_data.items():
+        item["temp"] = get_fixed_temp(item)
+    return print_sensors_data(original_data)
 
 
 @app.get("/batch/")
 async def batch(limit: int = 500, offset: int = 0) -> list[Sensor]:
     original_data = get_sensors_data(connection=connection, limit=limit, offset=offset)
-    return filter_results(original_data)
+    for item in original_data:
+        item["temp"] = get_fixed_temp(item)
+    return original_data
 
 
 @app.post("/")

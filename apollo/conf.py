@@ -4,16 +4,24 @@ from decimal import Decimal
 DATABASE_URL = os.getenv("DB_PATH", "postgresql://apollo:apollo@localhost/apollo")
 
 SENSORS = {
-    "reactor": {
-        "address": "Hall",
+    "REACTOR": {
+        "address": "28000007162e15",
         "offset": Decimal(0.0),
     },
-    "coolant": {
-        "address": "Garage",
+    "FRZR-LO": {
+        "address": "28000007173569",
         "offset": Decimal(0.0),
     },
-    "storage": {
-        "address": "",
+    "FRZR-HI": {
+        "address": "280000071766e4",
+        "offset": Decimal(0.0),
+    },
+    "CONNECT": {
+        "address": "28000007176e41",
+        "offset": Decimal(0.0),
+    },
+    "STORAGE": {
+        "address": "28000007177269",
         "offset": Decimal(0.0),
     },
 }
