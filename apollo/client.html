@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Apollo client">
+    <meta name="description" content="Apollo client">
+    <title>Apollo client</title>
+    <style>
+      #sensors {
+        font-family: monospace;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <pre id="sensors"></pre>
+    <script type="text/javascript">
+      function update() {
+        fetch("/print/")
+          .then(response => response.text())
+          .then(text => { document.getElementById("sensors").innerText = text})
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        update()
+        setInterval(update, 1000)
+      })
+    </script>
+  </body>
+</html>

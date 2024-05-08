@@ -11,21 +11,21 @@ if TYPE_CHECKING:
 
 def get_sensors_data(connection: Connection, limit: int = 500, offset: int = 0) -> list[dict]:
     with connection.cursor() as cursor:
-        cursor.execute("SELECT * FROM data ORDER BY created_at DESC LIMIT %s OFFSET %s", (limit, offset))
+        cursor.execute("SELECT * FROM churchill ORDER BY created_at DESC LIMIT %s OFFSET %s", (limit, offset))
         return [{**item} for item in cursor.fetchall()]
 
 
-def get_latest_sensors_data(connection: Connection) -> list[dict]:
+def get_latest_sensors_data(connection: Connection) -> dict:
     with connection.cursor() as cursor:
-        result = []
+        result = {}
         for sensor in SENSORS:
-            cursor.execute("SELECT * FROM data WHERE sensor_id = %s ORDER BY created_at DESC", (sensor,))
+            cursor.execute("SELECT * FROM churchill WHERE sensor_id = %s ORDER BY created_at DESC", (sensor,))
             if item := cursor.fetchone():
-                result.append({**item})
+                result[sensor] = item
         return result
 
 
-def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal, humidity: Decimal):
+def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal):
     with connection.cursor() as cursor:
-        cursor.execute("INSERT INTO data (sensor_id, temp, humidity) VALUES (%s, %s, %s)", (sensor_id, temp, humidity))
+        cursor.execute("INSERT INTO churchill (sensor_id, temp) VALUES (%s, %s)", (sensor_id, temp))
         connection.commit()

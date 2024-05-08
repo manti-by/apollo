@@ -6,7 +6,7 @@
 
 ## About
 
-Raspberry Pi monitoring app, a satellite for [ODIN](https://github.com/manti-by/odin) server.
+Raspberry Pi monitoring app, a satellite for [Helios Swarm](https://github.com/manti-by/helios/tree/swarm)
 
 Author: Alexander Chaika <manti.by@gmail.com>
 
@@ -15,7 +15,7 @@ Source link: https://github.com/manti-by/apollo/
 Requirements:
 
 - Raspberry Pi 2 Model B
-- DHT22 sensor
+- DS1820 x3 sensors
 
 ## Setup Apollo application
 
@@ -26,7 +26,7 @@ create [a virtual environment](https://docs.python.org/3/library/venv.html) for 
 
     ```shell
     mkdir /home/manti/app/
-    git clone https://github.com/manti-by/apollo/ app/
+    git clone https://github.com/manti-by/apollo app/
     pip install -r app/requirements.txt
     ```
 
