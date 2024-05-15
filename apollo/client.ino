@@ -7,7 +7,7 @@
 #define DHTTTHRESHOLD 11
 
 #define SERVER_ADDRESS "http://192.168.0.103"
-#define SENSOR_ID "CENTAX-X"
+#define SENSOR_ID "CXX"
 
 #define SSID "WiFi SSID"
 #define PSWD "WiFi Password"
@@ -39,7 +39,7 @@ void setup() {
   Serial.println("[WIFI] Connected");
   Serial.println("[WIFI] IP address: ");
   Serial.println(WiFi.localIP());
-        
+
   Serial.println("[DHT] Begin connection");
   dht.begin();
 }
@@ -60,9 +60,9 @@ void loop() {
       http.begin(client, SERVER_ADDRESS);
       http.addHeader("Content-Type", "application/json");
 
-      String payload = String("{\"sensor_id\":\"") + SENSOR_ID + 
-                       String("\",\"temp\":") + temp + 
-                       String(",\"humidity\":") + humidity + String("}"); 
+      String payload = String("{\"sensor_id\":\"") + SENSOR_ID +
+                       String("\",\"temp\":") + temp +
+                       String(",\"humidity\":") + humidity + String("}");
       int httpCode = http.POST(payload);
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {

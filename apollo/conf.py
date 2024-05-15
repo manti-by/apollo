@@ -3,51 +3,53 @@ from decimal import Decimal
 
 DATABASE_URL = os.getenv("DB_PATH", "postgresql://apollo:apollo@localhost/apollo")
 
-SENSORS = {
-    "REACTOR": {
+DHT22_CHANNEL = 4
+
+ONE_WIRE_SENSORS = {
+    "RCT": {
         "address": "28000007162e15",
         "offset": Decimal(0.0),
     },
-    "FRZR-LO": {
+    "FLO": {
         "address": "28000007173569",
         "offset": Decimal(0.0),
     },
-    "FRZR-HI": {
+    "FHI": {
         "address": "280000071766e4",
         "offset": Decimal(0.0),
     },
-    "CONNECT": {
+    "CON": {
         "address": "28000007176e41",
         "offset": Decimal(0.0),
     },
-    "STORAGE": {
+    "STG": {
         "address": "28000007177269",
         "offset": Decimal(0.0),
     },
 }
 
 SATELLITES = {
-    "CORUSCANT": {
+    "IAM": {
         "location": "Hall",
         "temp_offset": Decimal(-5.1),
         "humidity_offset": Decimal(6.0),
     },
-    "CENTAX-1": {
+    "CX1": {
         "location": "Garage",
         "temp_offset": Decimal(-4.4),
         "humidity_offset": Decimal(8.0),
     },
-    "CENTAX-2": {
+    "CX2": {
         "location": "2nd floor",
         "temp_offset": Decimal(-6.1),
         "humidity_offset": Decimal(9.0),
     },
-    "CENTAX-3": {
+    "CX3": {
         "location": "Work room",
         "temp_offset": Decimal(-4.4),
         "humidity_offset": Decimal(8.0),
     },
-    "CENTAX-4": {
+    "CX4": {
         "location": "Bedroom",
         "temp_offset": Decimal(-6.1),
         "humidity_offset": Decimal(9.0),
