@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+
 if TYPE_CHECKING:
     from decimal import Decimal
-    from psycopg2.extensions import connection as Connection
+
+    from psycopg2.extensions import connection as Connection  # noqa
 
 
 def get_sensors_data(connection: Connection, limit: int = 500, offset: int = 0) -> list[dict]:
@@ -13,17 +15,17 @@ def get_sensors_data(connection: Connection, limit: int = 500, offset: int = 0) 
         return [{**item} for item in cursor.fetchall()]
 
 
-def get_latest_sensors_data(connection: Connection, sensors: list[str]) -> dict:
+def get_latest_sensors_data(connection: Connection, sensors: list[str]) -> list[dict]:
     with connection.cursor() as cursor:
-        result = {}
+        result = []
         for sensor in sensors:
             cursor.execute("SELECT * FROM data WHERE sensor_id = %s ORDER BY created_at DESC", (sensor,))
             if item := cursor.fetchone():
-                result[sensor] = item
+                result.append({**item})
         return result
 
 
-def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal, humidity: Decimal = None):
+def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal, humidity: Decimal | None = None):
     with connection.cursor() as cursor:
         cursor.execute("INSERT INTO data (sensor_id, temp, humidity) VALUES (%s, %s, %s)", (sensor_id, temp, humidity))
         connection.commit()
