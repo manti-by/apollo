@@ -18,14 +18,18 @@ migrate:
 	psql -h localhost -U apollo apollo -c "$$SENSORS_MIGRATION_SCRIPT"
 
 pip:
-	pip install -r requirements.txt
+	uv pip install -r requirements.txt
 
-update-requirements:
+update:
 	pcu requirements.txt -u
+	pre-commit autoupdate
 
 check:
 	git add .
 	pre-commit run
+
+test:
+	export LOG_PATH=/tmp/odin.log && pytest
 
 deploy:
 	scp -r [!.]* coruscant:/home/manti/app/
