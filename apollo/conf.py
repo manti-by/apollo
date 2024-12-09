@@ -1,10 +1,13 @@
 import configparser
 import os
 from decimal import Decimal
+from pathlib import Path
 
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 config = configparser.ConfigParser()
-config.read("settings.ini")
+config.read(BASE_DIR / "settings.ini")
 
 MODE = os.getenv("MODE", config["default"]["mode"])
 
