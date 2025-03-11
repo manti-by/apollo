@@ -1,15 +1,13 @@
 import logging.config
-from datetime import datetime
-from decimal import Decimal
 
 import psycopg2
 from fastapi import FastAPI
 from fastapi.responses import PlainTextResponse
 from psycopg2.extras import DictCursor
-from pydantic import BaseModel, Field
 
-from apollo.conf import DATABASE_URL, LOGGING, ONE_WIRE_SENSORS, SATELLITES
+from apollo.conf import DATABASE_URL, LOGGING, MODE, SENSORS
 from apollo.database import get_latest_sensors_data, get_sensors_data, save_sensors_data
+from apollo.models import Sensor
 from apollo.services import print_sensors_data
 
 
@@ -20,54 +18,25 @@ connection = psycopg2.connect(DATABASE_URL, cursor_factory=DictCursor)
 app = FastAPI()
 
 
-class Sensor(BaseModel):
-    id: int | None = Field(None)
-    created_at: datetime | None = Field(None)
-
-    sensor_id: str
-    temp: Decimal
-    humidity: Decimal | None = None
-
-
-def adjust_values(items: list) -> list[Sensor]:
-    result = []
-    sensors = {**SATELLITES, **ONE_WIRE_SENSORS}
-    for item in items:
-        sensor = sensors.get([item["sensor_id"]])
-        if sensor is None:
-            logger.warning(f"Sensor {item['sensor_id']} not found")
-            continue
-
-        if sensor.get("temp_offset"):
-            item["temp"] = round(Decimal(item["temp"]) + sensor.get("temp_offset"), ndigits=1)
-        if item.get("humidity") and sensor.get("humidity_offset"):
-            item["humidity"] = round(Decimal(item["humidity"]) + sensor.get("temp_offset"), ndigits=1)
-
-        result.append(Sensor(**item))
-    return result
-
-
 @app.get("/")
-async def get(mode: str | None = "local") -> list[Sensor]:
-    sensors = SATELLITES.keys() if mode == "network" else ONE_WIRE_SENSORS.keys()
-    original_data = get_latest_sensors_data(connection=connection, sensors=sensors)
-    return adjust_values(original_data)
+async def get() -> list[Sensor]:
+    sensor_ids = [x.sensor_id for x in SENSORS.values()]
+    return [Sensor(**x) for x in get_latest_sensors_data(connection=connection, sensor_ids=sensor_ids)]
 
 
 @app.get("/print/", response_class=PlainTextResponse)
-async def echo(mode: str | None = "local") -> str:
-    sensors = SATELLITES.keys() if mode == "network" else ONE_WIRE_SENSORS.keys()
-    original_data = get_latest_sensors_data(connection=connection, sensors=sensors)
-    return print_sensors_data(adjust_values(original_data))
+async def echo() -> str:
+    sensor_ids = [x.sensor_id for x in SENSORS.values()]
+    original_data = [Sensor(**x) for x in get_latest_sensors_data(connection=connection, sensor_ids=sensor_ids)]
+    return print_sensors_data(original_data)
 
 
 @app.get("/batch/")
 async def batch(limit: int = 500, offset: int = 0) -> list[Sensor]:
-    original_data = get_sensors_data(connection=connection, limit=limit, offset=offset)
-    return adjust_values(original_data)
+    return [Sensor(**x) for x in get_sensors_data(connection=connection, limit=limit, offset=offset)]
 
 
 @app.post("/")
 async def post(sensor: Sensor):
-    save_sensors_data(connection=connection, sensor_id=sensor.sensor_id, temp=sensor.temp, humidity=sensor.humidity)
+    save_sensors_data(connection=connection, sensor_id=sensor.sensor_id, temp=sensor.temp, context={"mode": MODE})
     return "Created"
