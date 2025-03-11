@@ -6,7 +6,7 @@
 
 ## About
 
-Raspberry Pi monitoring app, a satellite for [Helios Swarm](https://github.com/manti-by/helios/tree/swarm)
+Raspberry Pi monitoring app, a satellite for [Amon-Ra server](https://github.com/manti-by/amon-ra/)
 
 Author: Alexander Chaika <manti.by@gmail.com>
 
@@ -17,7 +17,7 @@ Requirements:
 - Raspberry Pi 2 Model B
 - One DHT22 sensor
 - Five DS1820 sensors
-- Four ESP-01+DHT11 satellites
+- Four ESP-01 with DHT11 satellites
 
 ## Setup Apollo application
 
