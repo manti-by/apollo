@@ -44,19 +44,14 @@ select = [
     "RUF" # Ruff-specific rules
 ]
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
     ".git",
     ".git-rewrite",
-    ".mypy_cache",
     ".pytype",
     ".ruff_cache",
     ".venv",
     "venv",
     "__pypackages__",
-    "amon_ra/settings/*",
-    "amon_ra/bot/settings.py"
+    "docs/conf.py"
 ]
 ignore = [
     # Disable eradicate (commented code removal)
