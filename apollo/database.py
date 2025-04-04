@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 
@@ -42,10 +43,16 @@ def save_sensors_data(connection: Connection, sensor_id: str, temp: Decimal, con
         connection.commit()
 
 
-def update_sensor_data(connection: Connection, record_id: int, temp: Decimal, context: dict | None = None):
+def update_sensor_data(
+    connection: Connection,
+    record_id: int,
+    temp: Decimal,
+    context: dict | None = None,
+    synced_at: datetime | None = None,
+):
     with connection.cursor() as cursor:
         cursor.execute(
-            "UPDATE data SET temp = %s, context = %s WHERE id = %s",
-            (temp, json.dumps(context) if context else "{}", record_id),
+            "UPDATE data SET temp = %s, context = %s, synced_at = %s WHERE id = %s",
+            (temp, json.dumps(context) if context else "{}", synced_at, record_id),
         )
         connection.commit()
