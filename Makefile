@@ -7,7 +7,8 @@ CREATE TABLE data
     sensor_id VARCHAR(32) NOT NULL,
     temp NUMERIC(7, 2) NOT NULL,
     context JSON DEFAULT '{}',
-    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+    synced_at TIMESTAMP WITH TIME ZONE NULL
 );
 CREATE INDEX created_at_index ON data (created_at DESC);
 endef
@@ -32,8 +33,4 @@ test:
 	export LOG_PATH=/tmp/odin.log && pytest
 
 deploy:
-	scp -r [!.]* coruscant:/home/manti/app/
-	ssh coruscant "pip install --no-warn-script-location -q -r /home/manti/app/requirements.txt"
-	ssh coruscant "sudo service nginx restart"
-	ssh coruscant "sudo systemctl daemon-reload"
-	ssh coruscant "sudo service apollo restart"
+	GLOBIGNORE="(*.pyc|*.jpg)" scp -r [!.]* coruscant:/home/manti/app/
