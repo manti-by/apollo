@@ -1,27 +1,52 @@
+[project]
+name = "apollo"
+version = "0.2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi==0.115.6",
+    "pi1wire==0.3.0",
+    "psycopg2==2.9.10",
+    "requests==2.32.3",
+    "RPi.GPIO==0.7.1",
+    "RPLCD==1.3.1",
+    "smbus2==0.5.0",
+    "uvicorn[standard]==0.34.0",
+    "Adafruit-DHT==1.4.0 ; platform_machine == 'armv7l'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "black>=24.10.0 ; platform_machine == 'x86_64'",
+    "ipython>=8.31.0",
+    "pre_commit>=4.1.0 ; platform_machine == 'x86_64'",
+    "prospector>=1.13.3 ; platform_machine == 'x86_64'",
+    "pytest>=8.3.4 ; platform_machine == 'x86_64'",
+    "pyupgrade>=3.19.1 ; platform_machine == 'x86_64'",
+]
+
 [tool.bandit]
 exclude_dirs = []
-skips = ["B101"]
+skips = ["B101", "B308", "B703"]
 
 [tool.black]
 line-length = 120
-target_version = ["py311"]
+target_version = ["py312"]
 include = '\.pyi?$'
 exclude = '''
 /(
     \.git
-  | \.mypy_cache
+  | \.idea
+  | \.vscode
   | \.pytest_cache
+  | \.ruff_cache
   | \.venv
-  | _build
-  | build
-  | dist
 )/
 '''
 
 [tool.ruff]
 line-length = 120
 indent-width = 4
-target-version = "py311"
+target-version = "py312"
 
 [tool.ruff.lint]
 select = [
@@ -40,10 +65,12 @@ select = [
 ]
 exclude = [
     ".git",
+    ".idea",
+    ".vscode",
+    ".pytest_cache",
     ".ruff_cache",
     ".venv",
     "venv",
-    "__pypackages__",
 ]
 ignore = [
     "DJ001", # Null values for model char fields
@@ -77,11 +104,12 @@ ignore-overlong-task-comments = true
 
 [tool.ruff.lint.isort]
 section-order = ["future", "standard-library", "third-party", "first-party", "local-folder"]
+known-third-party = ["apollo"]
 lines-after-imports = 2
 
 [tool.ruff.lint.isort.sections]
-# Group all Django imports into a separate section.
-"django" = ["apollo"]
+# Group all local imports into a separate section.
+"apollo" = ["services", "settings"]
 
 [tool.ruff.lint.per-file-ignores]
 # Ignore "E402", "F403", "F405" (import violations) in __init__.py files.
