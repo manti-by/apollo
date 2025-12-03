@@ -6,7 +6,7 @@
 #define DHTTYPE DHT11
 #define DHTTTHRESHOLD 11
 
-#define SERVER_ADDRESS "http://192.168.1.100"
+#define SERVER_ADDRESS "http://192.168.1.100/api/v1/sensors/"
 #define SENSOR_ID "CXX"
 
 #define SSID "WiFi SSID"
