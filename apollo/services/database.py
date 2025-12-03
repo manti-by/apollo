@@ -24,6 +24,14 @@ def get_sensors_data(
         return [{**item} for item in cursor.fetchall()]
 
 
+def get_not_synced_sensors_data(connection: Connection, limit: int = 500, offset: int = 0) -> list[dict]:
+    with connection.cursor() as cursor:
+        params = (limit, offset)
+        sql = "SELECT * FROM data WHERE synced_at IS NULL ORDER BY created_at DESC LIMIT %s OFFSET %s"
+        cursor.execute(sql, params)
+        return [{**item} for item in cursor.fetchall()]
+
+
 def get_latest_sensors_data(connection: Connection, sensor_ids: list[str]) -> list[dict]:
     with connection.cursor() as cursor:
         result = []

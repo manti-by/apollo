@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 
 if TYPE_CHECKING:
-    from apollo.models import Sensor
+    from models import Sensor
 
 
 def print_sensors_data(sensors: list[Sensor]) -> str:

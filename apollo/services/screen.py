@@ -1,10 +1,10 @@
 import logging.config
 
 import psycopg2
-from apollo.conf import DATABASE_URL, LOGGING, SENSORS
-from apollo.database import get_latest_sensors_data
-from apollo.models import Sensor
 from apollo.services import print_sensors_data
+from apollo.services.database import get_latest_sensors_data
+from apollo.services.models import Sensor
+from apollo.settings import DATABASE_URL, LOGGING, SENSORS
 from psycopg2.extras import DictCursor
 from RPLCD.i2c import CharLCD
 

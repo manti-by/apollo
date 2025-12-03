@@ -1,7 +1,12 @@
 from datetime import UTC, datetime
 from decimal import Decimal
 
-from apollo.database import get_sensors_data, save_sensors_data, update_sensor_data
+from apollo.services.database import (
+    get_not_synced_sensors_data,
+    get_sensors_data,
+    save_sensors_data,
+    update_sensor_data,
+)
 
 
 class TestDatabase:
@@ -35,3 +40,18 @@ class TestDatabase:
         update_sensor_data(connection=db_connection, record_id=record_id, temp=temp, synced_at=datetime.now(UTC))
         sensors = get_sensors_data(connection=db_connection)
         assert sensors[0]["synced_at"]
+
+    def test_not_synced_sensors(self, db_connection):
+        temp = Decimal("20.5")
+        save_sensors_data(connection=db_connection, sensor_id="test 1", temp=temp)
+        save_sensors_data(connection=db_connection, sensor_id="test 2", temp=temp)
+        sensors = get_sensors_data(connection=db_connection)
+
+        record_id = sensors[0]["id"]
+        update_sensor_data(connection=db_connection, record_id=record_id, temp=temp, synced_at=datetime.now(UTC))
+
+        all_sensors = get_sensors_data(connection=db_connection)
+        assert len(all_sensors) == 2
+
+        not_synced_sensors = get_not_synced_sensors_data(connection=db_connection)
+        assert len(not_synced_sensors) == 1

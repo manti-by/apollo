@@ -2,7 +2,7 @@ import configparser
 import os
 from pathlib import Path
 
-from apollo.models import Sensor
+from apollo.services.models import Sensor
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,10 +17,10 @@ DATABASE_URL = os.getenv("DB_PATH", config["database"]["url"])
 
 SENSORS = {
     "T1": Sensor(sensor_id="28000007176e41", label_shine="CONNECT", label_warm="RADI-RS", context={"mode": MODE}),
-    "T2": Sensor(sensor_id="28000007162e15", label_shine="REACTOR", label_warm="WF01-IN", context={"mode": MODE}),
-    "T3": Sensor(sensor_id="28000007173569", label_shine="FRZR-LO", label_warm="WF01OUT", context={"mode": MODE}),
-    "T4": Sensor(sensor_id="280000071766e4", label_shine="FRZR-HI", label_warm="WF02-IN", context={"mode": MODE}),
-    "T5": Sensor(sensor_id="28000007177269", label_shine="STORAGE", label_warm="WF02OUT", context={"mode": MODE}),
+    "T2": Sensor(sensor_id="28000007162e15", label_shine="REACTOR", label_warm="WF-1-IN", context={"mode": MODE}),
+    "T3": Sensor(sensor_id="28000007173569", label_shine="FRZR-LO", label_warm="WF-1-OU", context={"mode": MODE}),
+    "T4": Sensor(sensor_id="280000071766e4", label_shine="FRZR-HI", label_warm="WF-2-IN", context={"mode": MODE}),
+    "T5": Sensor(sensor_id="28000007177269", label_shine="STORAGE", label_warm="WF-2-OU", context={"mode": MODE}),
 }
 
 LOGGING = {
@@ -39,7 +39,7 @@ LOGGING = {
             "formatter": "standard",
         },
         "file": {
-            "level": "WARNING",
+            "level": "INFO",
             "class": "logging.FileHandler",
             "filename": os.getenv("LOG_PATH", config["logging"]["path"]),
             "formatter": "standard",
